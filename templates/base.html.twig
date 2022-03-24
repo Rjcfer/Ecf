@@ -1,62 +1,74 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="icon"
+          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+    {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+    {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="Home" href="{{ path('app_home_page') }}">Home</a>
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="Home" href="{{ path('app_home_page') }}">Home</a>
+        <ul class="navbar-nav mr-auto">
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_hotel_form') }}">Add hotel </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
-                    </li>
+                <li class="nav-item">
 
+                    <a class="nav-link" href="{{ path('app_suite_form_s_p') }}">Add suite </a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
+                </li>
+            {% elseif is_granted('ROLE_ADMIN') %}
 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_suite_form', {'idHotel': app.user.managerOfHotelId }) }}"> Add suite</a>
+                </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
+                </li>
 
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_register') }}">Enregistrez-vous</a>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ path('app_login') }}">Connectez-vous </a>
-                    </li>
+            {% elseif is_granted('ROLE_CLIENT') %}
 
 
-                </ul>
-            </div>
-        </nav>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
+                </li>
 
-    </head>
-    <body class="container-fluid">
 
-        {% block body %}
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_register') }}">Enregistrez-vous</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ path('app_login') }}">Connectez-vous </a>
+                </li>
 
-        {% endblock %}
-    </body>
+            {% endif %}
+
+
+        </ul>
+
+    </nav>
+
+</head>
+<body class="container-fluid">
+
+{% block body %}
+
+{% endblock %}
+</body>
 </html>

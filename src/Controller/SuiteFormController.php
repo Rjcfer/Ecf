@@ -15,22 +15,25 @@ use Doctrine\Persistence\ManagerRegistry;
 class SuiteFormController extends AbstractController
 {
     #[Route('/admin/suiteform/{idHotel}', name: 'app_suite_form')]
-    public function index(int $idHotel ,Request $request, ManagerRegistry $doctrine): Response
+    public function index(int $idHotel, Request $request, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
 
         $hotel = $em->getRepository(Hotel::class)->find($idHotel);
         $suite = new Suite();
-        $suite->setHotel($hotel);
-
         $form = $this->createForm(SuiteType::class, $suite);
-
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $url = ($_POST['picturesUrl']);
+            $suite->setHotel($hotel);
+            $suite->setHotelId($idHotel);
+            $suite->setOccupied(false);
+            $suite->setPicturesUrl([$url]);
             $em = $doctrine->getManager();
             $em->persist($suite);
             $em->flush();
+
         }
         return $this->render('suite_form/index.html.twig', [
             'form' => $form->createView(),

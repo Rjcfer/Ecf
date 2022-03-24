@@ -13,39 +13,17 @@ class SuitesController extends AbstractController
 {
 
     /**
-     * @Route("/admin/suites/{idHotel}", name="update_Suite")
+     * @Route("client/suites/{idHotel}", name="show_suites")
      */
-   public function index(int $idHotel):Response
-    {  
+   public function index(int $idHotel, ManagerRegistry $doctrine):Response
+    {
+        $em= $doctrine->getManager();
+       $suitesList = $em->getRepository(Suite::class)->findBy(['hotel_id' => $idHotel]);
        echo($idHotel);
-        return $this->render('index/form.html.twig', [
-        'controller_name' => 'SuitesController', 
+        return $this->render('suites/index.html.twig', [
+        'controller_name' => 'SuitesController',
+            'suitesList'=>$suitesList
         ]);
     }
-    public function reservation(int $idHotel,int $idSuite,ManagerRegistry $doctrine, Request $request)
-    {
-        $em = $doctrine->getManager();
-        $suite = $em->getRepository(Suite::class)->findBy(['id'=>$idSuite]);
 
-        $form = $this->createForm(ReservationType::class,$suite);
-        $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid()){
-            $this->reserveSuite($suite,$doctrine);
-            return $this-> redirectToRoute('/');
-        }else{
-            $params = array(
-                'form' => $form,
-                'suite' => $suite
-            );
-            return $this->render('suites/index.html.twig',$params);
-        }
-    }
-
-   private function reserveSuite($suite, $doctrine){
-       $suite->setOccupied(true);
-     //  $suite->setOccupiedBy($user);
-     $em = $doctrine->getManager();
-     $em->persist($suite);
-     $em->flush();
-    }
 }
