@@ -9,11 +9,15 @@
                 <div class="form-group">
                     {% if form is defined %}
                         {{ form_start(form) }}
-                    {{ form_row(form.name) }}
-                    {{ form_row(form.picturesUrl) }}
-                    {{ form_row (form.Title)}}
-                    {{ form_row (form.description)}}
-                    <button type="submit" class="btn btn-primary">Register</button>
+                        {{ form_row(form.name) }}
+                        {{ form_row (form.Title) }}
+                        {{ form_row (form.description) }}
+                        {{ form_row (form.price) }}
+                        {{ form_row (form.bookingUrl) }}
+                        {{ form_row (form.mainPictureUrl) }}
+                        <input type="text" id="picturesUrl" name="picturesUrl" required
+                               minlength="4" maxlength="8" size="10">
+                        <button type="submit" class="btn btn-primary">Register</button>
                         {{ form_end(form) }}
                     {% endif %}
                 </div>

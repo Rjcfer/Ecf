@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HotelFormController!{% endblock %}
+
+{% block body %}
+<div>
+    <div class="row pt-2">
+        <div class="col ">
+            <div class="form-group">
+                {{ form_start(form) }}
+                {{ form_row(form.address) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.pictureUrl) }}
+                {{ form_row (form.City)}}
+                {{ form_row (form.Description)}}
+                <button type="submit" class="btn btn-primary">Register</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
