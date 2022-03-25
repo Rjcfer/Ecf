@@ -39,6 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', targetEntity: Reservation::class, cascade: ['persist', 'remove'])]
     private $reservation;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $managerOfHotelId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -163,6 +166,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->reservation = $reservation;
+
+        return $this;
+    }
+
+    public function getManagerOfHotelId(): ?int
+    {
+        return $this->managerOfHotelId;
+    }
+
+    public function setManagerOfHotelId(?int $managerOfHotelId): self
+    {
+        $this->managerOfHotelId = $managerOfHotelId;
 
         return $this;
     }

@@ -45,6 +45,12 @@ class Suite
     #[ORM\OneToOne(mappedBy: 'suite', targetEntity: Reservation::class, cascade: ['persist', 'remove'])]
     private $reservation;
 
+    #[ORM\Column(type: 'integer')]
+    private $hotel_id;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    private $mainPictureUrl;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -177,6 +183,30 @@ class Suite
         }
 
         $this->reservation = $reservation;
+
+        return $this;
+    }
+
+    public function getHotelId(): ?int
+    {
+        return $this->hotel_id;
+    }
+
+    public function setHotelId(int $hotel_id): self
+    {
+        $this->hotel_id = $hotel_id;
+
+        return $this;
+    }
+
+    public function getMainPictureUrl(): ?string
+    {
+        return $this->mainPictureUrl;
+    }
+
+    public function setMainPictureUrl(string $mainPictureUrl): self
+    {
+        $this->mainPictureUrl = $mainPictureUrl;
 
         return $this;
     }

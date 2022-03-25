@@ -8,11 +8,23 @@
         <div class="col ">
             <div class="form-group">
                 {{ form_start(form) }}
-                {{ form_row(form.address) }}
-                {{ form_row(form.name) }}
-                {{ form_row(form.pictureUrl) }}
-                {{ form_row (form.City)}}
-                {{ form_row (form.Description)}}
+                <input type="text" id="name" name="name" required
+                       minlength="4" maxlength="8" size="10">
+                <label>image en plus </label>
+
+                <label>image en plus </label>
+                <input type="text" id="address" name="address" required
+                       minlength="4" maxlength="8" size="10">
+                <label>image en plus </label>
+
+                <input type="text" id="pictureUrl" name="pictureUrl" required
+                       minlength="4" maxlength="8" size="10">
+                <label>image en plus </label>
+                <input type="text" id="City" name="City" required
+                       minlength="4" maxlength="8" size="10">
+                <label>image en plus </label>
+                <input type="text" id="Description" name="Description" required
+                       minlength="4" maxlength="8" size="10">
                 <button type="submit" class="btn btn-primary">Register</button>
                 {{ form_end(form) }}
             </div>
