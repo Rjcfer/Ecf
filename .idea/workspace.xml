@@ -1,20 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc7e91a8-ffed-49de-b324-baf00805a6a9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/templates/updateHotel/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HotelFormController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HotelFormController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SuiteFormController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SuiteFormController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SuitesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SuitesController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/templates/base.html.twig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Suite.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Suite.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/SuiteType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/SuiteType.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/home_page/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/suite_form/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/suite_form/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/suites/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/suites/index.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="67ead198-3fd0-4634-a8a0-a27b93330165" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
