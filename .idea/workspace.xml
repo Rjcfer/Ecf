@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="67ead198-3fd0-4634-a8a0-a27b93330165" name="Changes" comment="" />
+    <list default="true" id="67ead198-3fd0-4634-a8a0-a27b93330165" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomePageController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomePageController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HotelFormController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HotelFormController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ReservationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ReservationController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SuiteFormSPController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SuiteFormSPController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/SuitesController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SuitesController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Hotel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Hotel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Reservation.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Reservation.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Suite.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Suite.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/home_page/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/home_page/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/reservation/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/suite_form/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/suite_form/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/suite_form_sp/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/suite_form_sp/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/suites/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/suites/index.html.twig" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -173,13 +191,15 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="cc7e91a8-ffed-49de-b324-baf00805a6a9" name="Changes" comment="" />
+      <changelist id="67ead198-3fd0-4634-a8a0-a27b93330165" name="Changes" comment="" />
       <created>1648131082143</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1648131082143</updated>
       <workItem from="1648131083268" duration="1434000" />
       <workItem from="1648132576908" duration="3718000" />
+      <workItem from="1648197267689" duration="9797000" />
+      <workItem from="1648216203424" duration="6631000" />
     </task>
     <servers />
   </component>

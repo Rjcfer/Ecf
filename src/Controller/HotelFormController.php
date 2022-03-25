@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Hotel;
-use App\Entity\Suite;
 use App\Form\HotelType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,8 +47,7 @@ class HotelFormController extends AbstractController
         $em->remove($hotel);
         $em->flush();
 
-        return $this->render('home_page/index.html.twig', [
-        ]);
+        return $this->redirect($this->generateUrl('app_home_page'));
 
     }
 

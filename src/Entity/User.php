@@ -33,12 +33,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $lastName;
 
-    #[ORM\ManyToOne(targetEntity: Hotel::class, inversedBy: 'manager')]
-    private $hotel;
-
-    #[ORM\OneToOne(mappedBy: 'user', targetEntity: Reservation::class, cascade: ['persist', 'remove'])]
-    private $reservation;
-
     #[ORM\Column(type: 'integer', nullable: true)]
     private $managerOfHotelId;
 
@@ -148,27 +142,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getReservation(): ?Reservation
-    {
-        return $this->reservation;
-    }
-
-    public function setReservation(?Reservation $reservation): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($reservation === null && $this->reservation !== null) {
-            $this->reservation->setReservation(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($reservation !== null && $reservation->getUser() !== $this) {
-            $reservation->setUser($this);
-        }
-
-        $this->reservation = $reservation;
-
-        return $this;
-    }
 
     public function getManagerOfHotelId(): ?int
     {
