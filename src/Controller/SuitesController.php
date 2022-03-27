@@ -2,50 +2,43 @@
 
 namespace App\Controller;
 
+use App\Entity\Reservation;
 use App\Entity\Suite;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\BrowserKit\Request;
 
 class SuitesController extends AbstractController
 {
 
     /**
-     * @Route("/admin/suites/{idHotel}", name="update_Suite")
+     * @Route("suites/{idHotel}", name="show_suites")
      */
-   public function index(int $idHotel):Response
-    {  
-       echo($idHotel);
-        return $this->render('index/form.html.twig', [
-        'controller_name' => 'SuitesController', 
+    public function index(int $idHotel, ManagerRegistry $doctrine): Response
+    {
+
+        $em = $doctrine->getManager();
+        $suitesList = $em->getRepository(Suite::class)->findBy(['hotel_id' => $idHotel]);
+        $reservationList = $em->getRepository(Reservation::class)->findAll();
+//methode qui remet la suite a libre a la fin du delai de reservation
+        foreach ($suitesList as $suite) {
+            foreach ($reservationList as $reservation) {
+                if (($reservation->getEndDate() > date("Y-m-d")) && $reservation->getSuite() == $suite) {
+                    $suite->setOccupiedBy("");
+                    $suite->setOccupied(false);
+                    $em->persist($suite);
+                    $em->persist($reservation);
+                    $em->flush();
+
+                }
+            }
+        }
+
+        return $this->render('suites/index.html.twig', [
+            'controller_name' => 'SuitesController',
+            'suitesList' => $suitesList
         ]);
     }
-    public function reservation(int $idHotel,int $idSuite,ManagerRegistry $doctrine, Request $request)
-    {
-        $em = $doctrine->getManager();
-        $suite = $em->getRepository(Suite::class)->findBy(['id'=>$idSuite]);
 
-        $form = $this->createForm(ReservationType::class,$suite);
-        $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid()){
-            $this->reserveSuite($suite,$doctrine);
-            return $this-> redirectToRoute('/');
-        }else{
-            $params = array(
-                'form' => $form,
-                'suite' => $suite
-            );
-            return $this->render('suites/index.html.twig',$params);
-        }
-    }
-
-   private function reserveSuite($suite, $doctrine){
-       $suite->setOccupied(true);
-     //  $suite->setOccupiedBy($user);
-     $em = $doctrine->getManager();
-     $em->persist($suite);
-     $em->flush();
-    }
 }

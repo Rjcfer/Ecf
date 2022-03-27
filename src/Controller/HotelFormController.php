@@ -29,4 +29,53 @@ class HotelFormController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("sp/delete/hotel/{id}" , name="hotel_delete")
+     */
+    public function deleteAction(int $id, ManagerRegistry $doctrine)
+    {
+
+        $em = $doctrine->getManager();
+        $hotel = $doctrine->getRepository(Hotel::class)->find($id);
+
+        if (!$hotel) {
+            throw $this->createNotFoundException(
+                'Desole l\'hotel avec l\'id: ' . $id . ' n\'existe plus'
+            );
+        }
+        $em->remove($hotel);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('app_home_page'));
+
+    }
+
+    /**
+     * @Route("sp/edithotel/{id}", name="hotel_edit")
+     */
+
+    public function update(Request $request,ManagerRegistry $doctrine, int $id): Response
+    {
+        $em = $doctrine->getManager();
+        $hotel = $em->getRepository(Hotel::class)->find($id);
+        $form = $this->createForm(HotelType::class,$hotel);
+        $form->handleRequest($request);
+
+        if (!$hotel) {
+            throw $this->createNotFoundException(
+                'Le hotel avec l\'id: ' . $id . ' n\'existe plus  '
+            );
+        }
+       // $url = ($_POST['picturesUrl']);
+        $em->persist($hotel);
+        $em->flush();
+
+        return $this->render('hotel_form/index.html.twig', [
+            'form' => $form->createView(),
+        ]);
+
+
+    }
+
 }

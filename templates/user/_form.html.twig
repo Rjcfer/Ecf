@@ -1,0 +1,10 @@
+{{ form_start(form) }}
+    {{ form_widget(form) }}
+<div>
+    <p>Le user sera ?</p>
+    <input type="radio" name="usertype" value="user"> User
+    <input type="radio" name="usertype" value="admin"> Admin
+    <input type="radio" name="usertype" value="sp"> Super Admin
+</div>
+<button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

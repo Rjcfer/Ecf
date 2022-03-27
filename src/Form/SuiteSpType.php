@@ -2,35 +2,24 @@
 
 namespace App\Form;
 
-use App\Entity\Hotel;
 use App\Entity\Suite;
-use Doctrine\DBAL\Types\ArrayType;
-use Doctrine\DBAL\Types\JsonType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SuiteType extends AbstractType
+class SuiteSpType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name')
-            ->add('description', TextType::class)
             ->add('price')
             ->add('Title')
             ->add('bookingUrl')
-            ->add('mainPictureUrl');
+            ->add('description')
+            ->add('mainPictureUrl')
 
-        /*   ->add('occupied')
-           ->add('occupiedBy')
-           ->add('reservation')
-           ->add('hotel', EntityType::class, [
-               'class' => Hotel::class,
-               'choice_label' => 'id'
-           ]);*/
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
