@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HotelFormController!{% endblock %}
+{% block title %}New Suite{% endblock %}
 
 {% block body %}
     <div>
@@ -19,6 +19,7 @@
                         <button type="submit" class="btn btn-primary">Register</button>
                         {{ form_end(form) }}
                     {% endif %}
+                    <a href="{{ path('app_suite_controlleradmin_index',{'idHotel': app.user.managerOfHotelId}) }}">Retour</a>
                 </div>
             </div>
         </div>

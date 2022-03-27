@@ -7,7 +7,9 @@
 
     <div class="row justify-content-center">
         {% for hotel in hotelList %}
-             <a  href="{{ path('show_suites', {'idHotel': hotel.id}) }}" class="col-md-4 bg-light border rounded mx-1 my-1 shadow text-center ">
+            <div  class="col-md-4 col-12 bg-light border rounded mx-1 my-1 shadow text-center  ">
+            <a class="text-decoration-none text-black" href="{{ path('show_suites', {'idHotel': hotel.id}) }}"
+              >
                 <div class="row justify-content-center">
                     <div class="col ">
 
@@ -15,8 +17,7 @@
                     </div>
                     <div class="row ">
                         <div class="col mx-1 my-1">
-                            <img class="card-img" alt="Qries" src="{{ hotel.getPictureUrl }}"
-                                 width=150" height="150">
+                            <img class="rounded-3 " alt="Qries" src="{{ hotel.getPictureUrl }}" height="150">
                         </div>
                     </div>
                 </div>
@@ -26,6 +27,19 @@
                     </div>
                 </div>
             </a>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <div class="row">
+                        <div class="col">
+                            <a class="btn btn-outline-danger btn-sm"
+                               href="{{ path('hotel_delete', {'id': hotel.id }) }}"> Supprimer</a>
+                        </div>
+                    </div>
+                    <div class="col p-2">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ path('hotel_edit', {'id': hotel.id }) }}"> Modifier</a>
+                    </div>
+                {% endif %}
+            </div>
+
         {% endfor %}
 
     </div>

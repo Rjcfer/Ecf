@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Hotel;
 use App\Entity\Suite;
-use App\Form\HotelType;
 use App\Form\SuiteSpType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,7 +40,7 @@ class SuiteFormSPController extends AbstractController
 
     }
     /**
-     * @Route("sp/delete/suite/{id}" , name="article_delete")
+     * @Route("sp/delete/suite/{id}" , name="suite_delete")
      */
     public function deleteAction(int $id, ManagerRegistry $doctrine) {
 
@@ -56,13 +55,12 @@ class SuiteFormSPController extends AbstractController
         $em->remove($suite);
         $em->flush();
 
-        return $this->render('home_page/index.html.twig', [
-        ]);
+        return $this->redirect($this->generateUrl('app_home_page'));
 
     }
 
     /**
-     * @Route("sp/editsuite/{id}", name="hotel_edit")
+     * @Route("sp/editsuite/{id}", name="suite_edit")
      */
 
     public function update(Request $request,ManagerRegistry $doctrine, int $id): Response

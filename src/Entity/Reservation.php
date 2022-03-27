@@ -19,14 +19,14 @@ class Reservation
     #[ORM\Column(type: 'date')]
     private $endDate;
 
-    #[ORM\OneToOne(targetEntity: Hotel::class, cascade: ['persist', 'remove'])]
-    private $hotel;
 
-    #[ORM\OneToOne(inversedBy: 'user', targetEntity: Suite::class, cascade: ['persist', 'remove'])]
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $user_id;
+
+    #[ORM\ManyToOne(targetEntity: Suite::class, inversedBy: 'reservations')]
     private $suite;
 
-    #[ORM\OneToOne(inversedBy: 'reservation', targetEntity: User::class, cascade: ['persist', 'remove'])]
-    private $user;
 
     public function getId(): ?int
     {
@@ -57,14 +57,16 @@ class Reservation
         return $this;
     }
 
-    public function getHotel(): ?Hotel
+
+
+    public function getUserId(): ?int
     {
-        return $this->hotel;
+        return $this->user_id;
     }
 
-    public function setHotel(?Hotel $hotel): self
+    public function setUserId(?int $user_id): self
     {
-        $this->hotel = $hotel;
+        $this->user_id = $user_id;
 
         return $this;
     }
@@ -81,15 +83,5 @@ class Reservation
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
 
-    public function setuser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 }
