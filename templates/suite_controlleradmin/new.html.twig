@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Suite{% endblock %}
+
+{% block body %}
+    <div>
+        <div class="row pt-2">
+            <div class="col ">
+                <div class="form-group">
+                    {% if form is defined %}
+                        {{ form_start(form) }}
+                        {{ form_row(form.name) }}
+                        {{ form_row (form.Title) }}
+                        {{ form_row (form.description) }}
+                        {{ form_row (form.price) }}
+                        {{ form_row (form.bookingUrl) }}
+                        {{ form_row (form.mainPictureUrl) }}
+                        <input type="text" id="picturesUrl" name="picturesUrl" required>
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        {{ form_end(form) }}
+                    {% endif %}
+                    <a href="{{ path('app_suite_controlleradmin_index',{'idHotel': app.user.managerOfHotelId}) }}">Retour</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

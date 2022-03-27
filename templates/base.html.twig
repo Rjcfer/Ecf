@@ -41,7 +41,7 @@
             {% elseif is_granted('ROLE_ADMIN') %}
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_suite_form', {'idHotel': app.user.managerOfHotelId }) }}"> Add suite</a>
+                    <a class="nav-link" href="{{ path('app_suite_controlleradmin_index', {'idHotel': app.user.managerOfHotelId }) }}"> Suites</a>
                 </li>
 
                 <li class="nav-item">
