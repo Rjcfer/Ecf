@@ -20,8 +20,7 @@ final class Version20220324144015 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('DROP TABLE suite_pictures_url');
-        $this->addSql('ALTER TABLE suite ADD main_picture_url VARCHAR(255) NOT NULL');
+
     }
 
     public function down(Schema $schema): void
