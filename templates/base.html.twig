@@ -19,6 +19,10 @@
         <ul class="navbar-nav mr-auto">
 
             {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                </li>
+
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_user_index') }}">User params</a>
@@ -39,9 +43,14 @@
 
 
             {% elseif is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_suite_controlleradmin_index', {'idHotel': app.user.managerOfHotelId }) }}"> Suites</a>
+                    <a class="nav-link"
+                       href="{{ path('app_suite_controlleradmin_index', {'idHotel': app.user.managerOfHotelId }) }}">
+                        Suites</a>
                 </li>
 
                 <li class="nav-item">
@@ -49,7 +58,9 @@
                 </li>
 
             {% elseif is_granted('ROLE_CLIENT') %}
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
@@ -65,6 +76,9 @@
                 </li>
 
             {% endif %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
+            </li>
 
 
         </ul>

@@ -33,7 +33,6 @@ class SuitesController extends AbstractController
                     $em->persist($suite);
                     $em->persist($reservation);
                     $em->flush();
-                    echo($dateDB);
                 }
             }
         }

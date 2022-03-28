@@ -7,27 +7,29 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>StartDate</th>
-                <th>EndDate</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Debut</th>
+            <th>Fin</th>
+            <th>options</th>
+        </tr>
         </thead>
         <tbody>
         {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.id }}</td>
-                <td>{{ reservation.startDate ? reservation.startDate|date('Y-m-d') : '' }}</td>
-                <td>{{ reservation.endDate ? reservation.endDate|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
-                </td>
-            </tr>
+
+            {% if (reservation.getUserId() == app.user.id )  %}
+                <tr>
+                    <td>{{ reservation.startDate ? reservation.startDate|date('Y-m-d') : '' }}</td>
+                    <td>{{ reservation.endDate ? reservation.endDate|date('Y-m-d') : '' }}</td>
+
+                    <td>
+                        <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">Detailles</a>
+                        <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">editer</a>
+                    </td>
+                </tr>
+            {% endif %}
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">Vous n'avez pas de reservations :(</td>
             </tr>
         {% endfor %}
         </tbody>
