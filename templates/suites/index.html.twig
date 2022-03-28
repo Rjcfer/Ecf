@@ -24,7 +24,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col">
-                        {% if s.occupied == false %}
+                        {% if s.occupied == true %}
                                 <a class=" btn  bg-success bg-opacity-75 rounded-3"
                                    href="{{ path('app_reservation_new', {'idHotel': s.hotelid , 'idSuite': s.id ,'idUser':app.user.id}) }}">
                                     Reserver</a>

@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Reservation;
 use App\Entity\Suite;
+use Monolog\DateTimeImmutable;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class SuitesController extends AbstractController
 {
@@ -24,13 +26,14 @@ class SuitesController extends AbstractController
 //methode qui remet la suite a libre a la fin du delai de reservation
         foreach ($suitesList as $suite) {
             foreach ($reservationList as $reservation) {
-                if (($reservation->getEndDate() > date("Y-m-d")) && $reservation->getSuite() == $suite) {
+                $dateDB = date_format($reservation->getEndDate(),"Y-m-d");
+                if (($dateDB >date("Y-m-d")) && $reservation->getSuite() == $suite) {
                     $suite->setOccupiedBy("");
                     $suite->setOccupied(false);
                     $em->persist($suite);
                     $em->persist($reservation);
                     $em->flush();
-
+                    echo($dateDB);
                 }
             }
         }

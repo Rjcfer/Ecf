@@ -45,6 +45,8 @@ class ReservationController extends AbstractController
         }
 
         return $this->renderForm('reservation/new.html.twig', [
+            'idHotel'=>$idHotel,
+            'idSuite'=>$idSuite,
             'reservation' => $reservation,
             'form' => $form,
         ]);
