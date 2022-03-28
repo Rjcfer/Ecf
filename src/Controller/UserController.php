@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\User1Type;
 use App\Repository\UserRepository;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,17 +29,8 @@ class UserController extends AbstractController
         $user = new User();
         $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $role = ($_POST['usertype']);
-            echo($role);
-            if ($role == 'user') {
-                $user->setRoles(["ROLE_USER"]);
-            } elseif ($role == 'admin') {
-                $user->setRoles(["ROLE_ADMIN"]);
-            } else {
-                $user->setRoles(["ROLE_SUPER_ADMIN"]);
-            }
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -64,14 +56,25 @@ class UserController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, UserRepository $userRepository): Response
+    public function edit(Request $request, User $user, UserRepository $userRepository,ManagerRegistry $doctrine): Response
     {
         $form = $this->createForm(User1Type::class, $user);
         $form->handleRequest($request);
+        $em = $doctrine->getManager();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userRepository->add($user);
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+            $role = ($_POST['usertype']);
+            if ($role == 'user') {
+                $user->setRoles(["ROLE_USER"]);
+            } elseif ($role == 'admin') {
+                $user->setRoles(["ROLE_ADMIN"]);
+            } else {
+                $user->setRoles(["ROLE_SUPER_ADMIN"]);
+            }
+            $em->persist($user);
+            $em->flush();
+
+           return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('user/edit.html.twig', [

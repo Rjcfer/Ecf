@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon"
-          href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+ <link rel="icon" href="../assets/img/Hypnos_logo.png">
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -19,6 +18,10 @@
         <ul class="navbar-nav mr-auto">
 
             {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                </li>
+
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_user_index') }}">User params</a>
@@ -39,9 +42,14 @@
 
 
             {% elseif is_granted('ROLE_ADMIN') %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_suite_controlleradmin_index', {'idHotel': app.user.managerOfHotelId }) }}"> Suites</a>
+                    <a class="nav-link"
+                       href="{{ path('app_suite_controlleradmin_index', {'idHotel': app.user.managerOfHotelId }) }}">
+                        Suites</a>
                 </li>
 
                 <li class="nav-item">
@@ -49,7 +57,9 @@
                 </li>
 
             {% elseif is_granted('ROLE_CLIENT') %}
-
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
@@ -65,6 +75,9 @@
                 </li>
 
             {% endif %}
+            <li class="nav-item active">
+                <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
+            </li>
 
 
         </ul>
@@ -73,7 +86,6 @@
 
 </head>
 <body class="container-fluid">
-
 {% block body %}
 
 {% endblock %}

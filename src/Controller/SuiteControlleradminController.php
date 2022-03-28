@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Entity\Hotel;
 use App\Entity\Suite;
-use App\Form\Suite1Type;
 use App\Form\SuiteType;
 use App\Repository\SuiteRepository;
 use Doctrine\Persistence\ManagerRegistry;

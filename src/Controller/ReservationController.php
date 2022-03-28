@@ -45,16 +45,20 @@ class ReservationController extends AbstractController
         }
 
         return $this->renderForm('reservation/new.html.twig', [
+            'idHotel'=>$idHotel,
+            'idSuite'=>$idSuite,
             'reservation' => $reservation,
             'form' => $form,
         ]);
     }
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
-    public function show(Reservation $reservation): Response
+    public function show(Reservation $reservation ,Suite $suite,ManagerRegistry $doctrine): Response
     {
+
         return $this->render('reservation/show.html.twig', [
             'reservation' => $reservation,
+            'suiteName'=> $suite->getName()
         ]);
     }
 

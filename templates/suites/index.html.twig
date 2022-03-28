@@ -21,28 +21,40 @@
                             </a>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col">
+                            <p>{{ s.price }} $ la nuit </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col">
                         {% if s.occupied == false %}
+                            {% if is_granted('ROLE_USER') %}
                                 <a class=" btn  bg-success bg-opacity-75 rounded-3"
                                    href="{{ path('app_reservation_new', {'idHotel': s.hotelid , 'idSuite': s.id ,'idUser':app.user.id}) }}">
                                     Reserver</a>
+                            {% endif %}
                         {% else %}
-                            <p class="btn btn-sm bg-danger bg-opacity-75 rounded-3">Occupé </p>
+                            {% if is_granted('ROLE_USER') %}
+                                <p class="btn btn-sm bg-danger bg-opacity-75 rounded-3">Occupé </p>
+                            {% endif %}
                         {% endif %}
-                    </div>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <div class="col">
-                            <a class="btn btn-outline-danger btn-sm"
-                               href="{{ path('suite_delete', {'id': s.id }) }}"> Supprimer</a>
-                        </div>
 
-                        <div class="col">
-                            <a class="btn btn-outline-primary btn-sm" href="{{ path('suite_edit', {'id': s.id }) }}">
-                                Modifier</a>
-                        </div>
-                    {% endif %}
+                    </div>
+                    <div class="row">
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <div class="col">
+                                <a class="btn btn-outline-danger btn-sm"
+                                   href="{{ path('suite_delete', {'id': s.id }) }}"> Supprimer</a>
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="{{ path('suite_edit', {'id': s.id }) }}">
+                                    Modifier</a>
+                            </div>
+                        {% endif %}
+
+                    </div>
+
                 </div>
             </div>
         {% endfor %}

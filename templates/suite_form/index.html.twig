@@ -1,26 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HotelFormController!{% endblock %}
+{% block title %}Ajout nouveau Hotel!{% endblock %}
 
 {% block body %}
     <div>
         <div class="row pt-2">
             <div class="col ">
-                <div class="form-group">
+                <div class="bg-white p-5 contact-form">
                     {% if form is defined %}
+                    <div class="form-group">
                         {{ form_start(form) }}
-                        {{ form_row(form.name) }}
-                        {{ form_row (form.Title) }}
-                        {{ form_row (form.description) }}
-                        {{ form_row (form.price) }}
-                        {{ form_row (form.bookingUrl) }}
-                        {{ form_row (form.mainPictureUrl) }}
-                        <input type="text" id="picturesUrl" name="picturesUrl" required>
-                        <button type="submit" class="btn btn-primary">Register</button>
-                        {{ form_end(form) }}
-                    {% endif %}
+                        {{ form_row(form.name, label: 'Nom', 'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.Title, label: 'Titre', 'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.description, label: 'Description', 'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.price, label: 'Prix', 'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.bookingUrl, label: 'Lien Booking', 'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_row(form.mainPictureUrl, label: 'Lien Photo', 'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <input type="text" id="picturesUrl" name="picturesUrl" required>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    {{ form_end(form) }}
                 </div>
+                {% endif %}
             </div>
+
         </div>
     </div>
+
 {% endblock %}
