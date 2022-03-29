@@ -5,7 +5,8 @@
 <div class="col">
     <div class="row">
         <div class="text-center">
-            {{ form_widget(form) }}
+            {{ form_row(form.startDate, { 'id':'startDate','attr': {'class': 'endListener'}}) }}
+            {{ form_row(form.endDate, {'id':'endDate','attr': {'class': 'endListener'}}) }}
         </div>
     </div>
 </div>
@@ -15,14 +16,16 @@
         {% if hotelList is defined %}
             <p class="text-center">Hotel</p>
             <select id="hID" name="hID">
+                <option class="hotel" value="0">Hotel</option>
                 {% for hotel in hotelList %}
-                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                    <option class="hotel" value="{{ hotel.id }}">{{ hotel.name }}</option>
                 {% endfor %}
             </select>
             <p>Suite id</p>
-            <select id="sID" name="sID">
+            <select id="sID" name="sID" class="endListener">
+                <option class="suite " value="0">Suite</option>
                 {% for suite in suiteList %}
-                    <option value="{{ suite.id }}">{{ suite.name }}</option>
+                    <option value="{{ suite.price }}">{{ suite.name }}</option>
                 {% endfor %}
             </select>
         {% else %}
@@ -37,14 +40,62 @@
         {% endif %}
     </div>
 </div>
+<div class="row">
+    <div class="col text-center">
+        <h3 class="h3"> Prix total</h3>
+        <p id="price">0</p>
+        <h3 class="h3">Prix/nuit</h3>
+        <p id="nPrice">0</p>
+    </div>
+</div>
 <div class="row text-center">
     <div class="col">
         <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
     </div>
 </div>
 
-
 {{ form_end(form) }}
 {% block javascripts %}
     {{ encore_entry_script_tags('datepicker') }}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        let hotel = document.querySelector('#hID');
+        let suites = document.querySelector('#sID');
+        let price = document.querySelector('#price');
+        let startDate = document.querySelector('#startDate');
+        let endDate = document.querySelector('#endDate');
+        let nPrice = document.querySelector('#nPrice');
+        let endListener = document.querySelectorAll('.endListener');
+
+        suites.style.display = 'none';
+        hotel.addEventListener('change', function (event) {
+            event.preventDefault();
+            let hid = hotel.value;
+            let url = "{{ path('app_reservation_getsuiteList', {'hotelId':1}) }}";
+            axios.get(url).then(function (response) {
+                const suiteList = response.data.suites;
+                suites.style.display = 'flex';
+            })
+        });
+        console.log(endListener);
+        endListener.forEach(item => {
+            item.addEventListener('change', function (event) {
+                const sDate = new Date(startDate.value);
+                const eDate = new Date(endDate.value);
+                const diffTime = Math.abs(eDate - sDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                if (!isNaN(diffDays) && (sDate < eDate)) {
+                    price.textContent = (suites.value) * diffDays + '$ ';
+                } else {
+                    price.textContent = 'Vous devez remplir correctement les dates '
+                }
+                nPrice.textContent = suites.value + '$';
+
+            })
+        })
+
+    </script>
+
+
 {% endblock %}

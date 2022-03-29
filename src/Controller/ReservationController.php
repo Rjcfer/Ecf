@@ -154,7 +154,7 @@ class ReservationController extends AbstractController
         $suiteList = $em->getRepository(Suite::class)->findBy(['hotel_id' => $hotelId]);
         $arrayToSend = [];
         foreach ($suiteList as $suite) {
-            $arrayToSend = ['name' => $suite->getname(), 'id' => $suite->getId()];
+            $arrayToSend[] = ['name' => $suite->getname(), 'id' => $suite->getId(),'price'=>$suite->getPrice()];
         }
         return $this->json(['code' => 200, 'message' => 'ok','suites'=>$arrayToSend], 200);
     }
