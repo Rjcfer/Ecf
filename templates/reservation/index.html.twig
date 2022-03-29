@@ -8,31 +8,36 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Debut</th>
-            <th>Fin</th>
-            <th>options</th>
+            <th>Id</th>
+            <th>StartDate</th>
+            <th>EndDate</th>
+            <th>User_id</th>
+            <th>actions</th>
         </tr>
         </thead>
         <tbody>
         {% for reservation in reservations %}
-
-            {% if (reservation.getUserId() == app.user.id )  %}
-                <tr>
-                    <td>{{ reservation.startDate ? reservation.startDate|date('Y-m-d') : '' }}</td>
-                    <td>{{ reservation.endDate ? reservation.endDate|date('Y-m-d') : '' }}</td>
-
-                    <td>
-                        <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">Detailles</a>
-                        <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">editer</a>
-                    </td>
-                </tr>
+            {% if is_granted('ROLE_USER') %}
+                {% if (reservation.getUserId() == app.user.id ) %}
+                    <tr>
+                        <td>{{ reservation.id }}</td>
+                        <td>{{ reservation.startDate ? reservation.startDate|date('Y-m-d') : '' }}</td>
+                        <td>{{ reservation.endDate ? reservation.endDate|date('Y-m-d') : '' }}</td>
+                        <td>{{ reservation.userId }}</td>
+                        <td>
+                            <a href="{{ path('app_reservation_show', {'id': reservation.id}) }}">show</a>
+                            <a href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% endif %}
             {% endif %}
         {% else %}
             <tr>
-                <td colspan="4">Vous n'avez pas de reservations :(</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
+    <a href="{{ path('app_reservation_new') }}">Create new</a>
 {% endblock %}

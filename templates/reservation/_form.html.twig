@@ -1,7 +1,34 @@
+{% block stylesheet %}
+    {{ encore_entry_link_tags('datepicker') }}
+{% endblock %}
+{{ form_start(form) }}
+    {{ form_widget(form) }}
 
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
 
-        <button class="btn">{{ button_label|default('Enregistrer') }}</button>
-        {{ form_end(form) }}
+{% if idSuite is defined %}
+    <p>Hotel</p>
+    <select id="hID" name="hID">
+        {% for hotel in hotelList %}
+            <option  value="{{ hotel.id }}">{{ hotel.name }}</option>
+        {% endfor %}
+    </select>
+    <p>Suite id</p>
+    <input type="number" name="sID" id="sID" placeholder="{{ idSuite }}">
 
+{% else %}
+ <p>Hotel</p>
+    <select id="hID" name="hID">
+        {% for hotel in hotelList %}
+            <option  value="{{ hotel.id }}">{{ hotel.name }}</option>
+        {% endfor %}
+    </select>
+    <p>Suite id</p>
+    <input type="number" name="sID" id="sID">
+{% endif %}
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+
+{{ form_end(form) }}
+{% block javascripts %}
+    {{ encore_entry_script_tags('datepicker') }}
+{% endblock %}

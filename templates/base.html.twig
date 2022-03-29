@@ -10,9 +10,6 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
     <nav class="navbar navbar-expand navbar-light bg-light">
         <a class="Home" href="{{ path('app_home_page') }}">Home</a>
         <ul class="navbar-nav mr-auto">
@@ -78,6 +75,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_reservation_new') }}">Réservez</a>
+            </li>
 
 
         </ul>
@@ -89,5 +89,9 @@
 {% block body %}
 
 {% endblock %}
+
 </body>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </html>

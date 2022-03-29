@@ -32,13 +32,15 @@
                         {% if s.occupied == false %}
                             {% if is_granted('ROLE_USER') %}
                                 <a class=" btn  bg-success bg-opacity-75 rounded-3"
-                                   href="{{ path('app_reservation_new', {'idHotel': s.hotelid , 'idSuite': s.id ,'idUser':app.user.id}) }}">
+                                   href="{{ path('app_reservation_newwithids', {'idHotel': s.hotelid , 'idSuite': s.id ,'idUser':app.user.id}) }}">
+                                    Reserver</a>
+                            {% else %}
+                                <a class=" btn  bg-success bg-opacity-75 rounded-3"
+                                   href="{{ path('app_reservation_newwithoutuserId', {'idHotel': s.hotelid , 'idSuite': s.id }) }}">
                                     Reserver</a>
                             {% endif %}
                         {% else %}
-                            {% if is_granted('ROLE_USER') %}
-                                <p class="btn btn-sm bg-danger bg-opacity-75 rounded-3">Occupé </p>
-                            {% endif %}
+                            <p class="btn btn-sm bg-danger bg-opacity-75 rounded-3">Occupé </p>
                         {% endif %}
 
                     </div>
