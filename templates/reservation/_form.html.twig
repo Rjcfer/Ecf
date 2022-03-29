@@ -74,7 +74,7 @@
             let url = "{{ path('app_reservation_getsuiteList', {'hotelId':1}) }}";
             axios.get(url).then(function (response) {
                 const suiteList = response.data.suites;
-                suites.style.display = 'flex';
+                suites.style.display = 'inline-block';
             })
         });
         console.log(endListener);
@@ -91,11 +91,7 @@
                     price.textContent = 'Vous devez remplir correctement les dates '
                 }
                 nPrice.textContent = suites.value + '$';
-
             })
         })
-
     </script>
-
-
 {% endblock %}
