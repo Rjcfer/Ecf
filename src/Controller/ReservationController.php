@@ -32,6 +32,7 @@ class ReservationController extends AbstractController
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
         $hotelList = $em->getRepository(Hotel::class)->findAll();
+        $suiteList = $em->getRepository(Suite::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sId = ($_POST['sID']);
@@ -47,7 +48,8 @@ class ReservationController extends AbstractController
         return $this->renderForm('reservation/new.html.twig', [
             'reservation' => $reservation,
             'form' => $form,
-            'hotelList' => $hotelList
+            'hotelList' => $hotelList,
+            'suiteList'=>$suiteList
 
         ]);
     }
@@ -57,6 +59,7 @@ class ReservationController extends AbstractController
     {
         $em = $doctrine->getManager();
         $hotelList = [$em->getRepository(Hotel::class)->find($idHotel)];
+        $suiteList = [$em->getRepository(Suite::class)->find($idSuite)];
         $suite = $em->getRepository(Suite::class)->find($idSuite);
         $reservation = new Reservation();
         $suite->setOccupiedBy($idUser);
@@ -73,8 +76,8 @@ class ReservationController extends AbstractController
         }
 
         return $this->renderForm('reservation/new.html.twig', [
+            'suiteList'=>$suiteList,
             'hotelList' => $hotelList,
-            'idSuite' => $idSuite,
             'reservation' => $reservation,
             'form' => $form,
         ]);
@@ -84,6 +87,7 @@ class ReservationController extends AbstractController
     public function newWithoutUserId(int $idHotel, int $idSuite, Request $request, ReservationRepository $reservationRepository, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
+        $suiteList = [$em->getRepository(Suite::class)->find($idSuite)];
         $suite = $em->getRepository(Suite::class)->find($idSuite);
         $hotelList = [$em->getRepository(Hotel::class)->find($idHotel)];
         $reservation = new Reservation();
@@ -100,7 +104,7 @@ class ReservationController extends AbstractController
 
         return $this->renderForm('reservation/new.html.twig', [
             'hotelList' => $hotelList,
-            'idSuite' => $idSuite,
+            'suiteList'=>$suiteList,
             'reservation' => $reservation,
             'form' => $form,
         ]);

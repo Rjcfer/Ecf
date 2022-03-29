@@ -14,10 +14,12 @@ class ReservationType extends AbstractType
     {
         $builder
             ->add('startDate', DateType::class, [
+                'label' => 'Début',
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker'],
             ])
             ->add('endDate', DateType::class, [
+                'label' => 'Fin ',
                 'widget' => 'single_text',
                 'attr' => ['class' => 'js-datepicker'],
             ]);

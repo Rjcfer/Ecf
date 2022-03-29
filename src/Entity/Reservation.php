@@ -20,7 +20,6 @@ class Reservation
     private $endDate;
 
 
-
     #[ORM\Column(type: 'integer', nullable: true)]
     private $user_id;
 

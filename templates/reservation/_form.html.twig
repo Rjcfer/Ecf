@@ -2,31 +2,47 @@
     {{ encore_entry_link_tags('datepicker') }}
 {% endblock %}
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="col">
+    <div class="row">
+        <div class="text-center">
+            {{ form_widget(form) }}
+        </div>
+    </div>
+</div>
 
+<div class="row text-center">
+    <div class="col ">
+        {% if hotelList is defined %}
+            <p class="text-center">Hotel</p>
+            <select id="hID" name="hID">
+                {% for hotel in hotelList %}
+                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                {% endfor %}
+            </select>
+            <p>Suite id</p>
+            <select id="sID" name="sID">
+                {% for suite in suiteList %}
+                    <option value="{{ suite.id }}">{{ suite.name }}</option>
+                {% endfor %}
+            </select>
+        {% else %}
+            <p class="h3">Hotel</p>
+            <select id="hID" name="hID">
+                {% for hotel in hotelList %}
+                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
+                {% endfor %}
+            </select>
+            <p>Suite id</p>
+            <input type="number" name="sID" id="sID">
+        {% endif %}
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col">
+        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    </div>
+</div>
 
-{% if idSuite is defined %}
-    <p>Hotel</p>
-    <select id="hID" name="hID">
-        {% for hotel in hotelList %}
-            <option  value="{{ hotel.id }}">{{ hotel.name }}</option>
-        {% endfor %}
-    </select>
-    <p>Suite id</p>
-    <input type="number" name="sID" id="sID" placeholder="{{ idSuite }}">
-
-{% else %}
- <p>Hotel</p>
-    <select id="hID" name="hID">
-        {% for hotel in hotelList %}
-            <option  value="{{ hotel.id }}">{{ hotel.name }}</option>
-        {% endfor %}
-    </select>
-    <p>Suite id</p>
-    <input type="number" name="sID" id="sID">
-{% endif %}
-
-<button class="btn">{{ button_label|default('Save') }}</button>
 
 {{ form_end(form) }}
 {% block javascripts %}
