@@ -13,31 +13,16 @@
 
 <div class="row text-center">
     <div class="col ">
-        {% if hotelList is defined %}
-            <p class="text-center">Hotel</p>
-            <select id="hID" name="hID">
-                <option class="hotel" value="0">Hotel</option>
-                {% for hotel in hotelList %}
-                    <option class="hotel" value="{{ hotel.id }}">{{ hotel.name }}</option>
-                {% endfor %}
-            </select>
-            <p>Suite id</p>
-            <select id="sID" name="sID" class="endListener">
-                <option class="suite " value="0">Suite</option>
-                {% for suite in suiteList %}
-                    <option value="{{ suite.price }}">{{ suite.name }}</option>
-                {% endfor %}
-            </select>
-        {% else %}
-            <p class="h3">Hotel</p>
-            <select id="hID" name="hID">
-                {% for hotel in hotelList %}
-                    <option value="{{ hotel.id }}">{{ hotel.name }}</option>
-                {% endfor %}
-            </select>
-            <p>Suite id</p>
-            <input type="number" name="sID" id="sID">
-        {% endif %}
+        <p class="text-center">Hotel</p>
+        <select id="hID" name="hID">
+            <option class="hotel" value="0">Hotel</option>
+            {% for hotel in hotelList %}
+                <option class="hotel" value="{{ hotel.id }}">{{ hotel.name }}</option>
+            {% endfor %}
+        </select>
+        <p>Suite id</p>
+        <select id="sID" name="sID" class="endListener">
+        </select>
     </div>
 </div>
 <div class="row">
@@ -50,7 +35,8 @@
 </div>
 <div class="row text-center">
     <div class="col">
-        <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+        <button id="okBtn" class="btn btn-primary">{{ button_label|default('Reservez') }}</button>
+        <button id="iBtn" class="btn btn-danger btn-sm" disabled>Dates indiponibles</button>
     </div>
 </div>
 
@@ -66,32 +52,73 @@
         let endDate = document.querySelector('#endDate');
         let nPrice = document.querySelector('#nPrice');
         let endListener = document.querySelectorAll('.endListener');
-
+        let iBtn = document.querySelector('#iBtn');
+        let okBtn = document.querySelector('#okBtn');
+        let sDate;
+        let eDate;
+        okBtn.disabled = true;
+        iBtn.style.display = 'none';
         suites.style.display = 'none';
         hotel.addEventListener('change', function (event) {
             event.preventDefault();
             let hid = hotel.value;
-            let url = "{{ path('app_reservation_getsuiteList', {'hotelId':1}) }}";
+            let url = "/reservation/getsuite/" + hid;
             axios.get(url).then(function (response) {
                 const suiteList = response.data.suites;
-                suites.style.display = 'flex';
+                suites.style.display = 'inline-block';
+                suites.innerHTML = '';
+                let sOpt = document.createElement('option');
+                sOpt.innerHTML = 'Suite';
+                suites.appendChild(sOpt);
+                suiteList.forEach(e => {
+                    let opt = document.createElement('option');
+                    opt.className = e.price;
+                    opt.value = e.id;
+                    opt.id = e.id;
+                    opt.innerHTML = e.name;
+                    suites.appendChild(opt);
+                })
+
             })
         });
-        console.log(endListener);
         endListener.forEach(item => {
             item.addEventListener('change', function (event) {
-                const sDate = new Date(startDate.value);
-                const eDate = new Date(endDate.value);
+                sDate = new Date(startDate.value);
+                eDate = new Date(endDate.value);
                 const diffTime = Math.abs(eDate - sDate);
                 const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
+                let priceOf = parseInt(suites.children[suites.selectedIndex].className)
                 if (!isNaN(diffDays) && (sDate < eDate)) {
-                    price.textContent = (suites.value) * diffDays + '$ ';
+
+                    let sId = suites.children[suites.selectedIndex].id;
+                    let url = '/reservation/getdispo/' + sId;
+                    axios.post(url, {
+                        'startDate': sDate,
+                        'endDate': eDate,
+                        'suiteId': sId
+                    }).then(function (response) {
+                        let data = response.data;
+                        let isAvailable = data.isAvailable;
+                        if (!isAvailable) {
+                            okBtn.disabled = true;
+                            okBtn.style.display = 'none';
+                            iBtn.disabled = true;
+                            iBtn.style.display = 'inline-block';
+                        } else {
+                            okBtn.disabled = false;
+                            okBtn.style.display = 'inline-block';
+                            iBtn.style.display = 'none';
+                        }
+                    }).catch(function (err) {
+                        console.log(err);
+                    })
+
+                    price.textContent = priceOf * diffDays + '$ ';
+
                 } else {
                     price.textContent = 'Vous devez remplir correctement les dates '
                 }
-                nPrice.textContent = suites.value + '$';
-
+                nPrice.textContent = priceOf + '$';
             })
         })
 
