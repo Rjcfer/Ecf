@@ -176,9 +176,10 @@ class ReservationController extends AbstractController
                 if ($r->getSuite() == $suite) {
                     $end = $r->getStartDate()->getTimestamp();
                     $start = $r->getEndDate()->getTimestamp();
-                    if ($start <= $sDate && $sDate <= $end) {
+                    if ($start > $sDate && $start < $end) {
                         $isAvailable = false;
-                    } elseif ($start >= $eDate) {
+                    }
+                    if ($end > $sDate && $end < $eDate) {
                         $isAvailable = false;
                     }
                 }
