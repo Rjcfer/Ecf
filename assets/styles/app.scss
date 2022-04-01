@@ -1,5 +1,16 @@
 body {
-    background-color: lightgray;
+  background-color: lightgray;
+}
+
+.carousel-inner {
+  max-height: 20rem;
+  max-width: 50rem;
+  margin: auto;
+}
+
+.imgC {
+  max-height: 20rem;
+  max-width: 50rem;
 }
 
 @import "node_modules/bootstrap/scss/bootstrap.scss";

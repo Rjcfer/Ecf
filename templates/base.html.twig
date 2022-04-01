@@ -2,10 +2,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon"
-          href="./assets/img/Hypnos_logo.png"">
+    <link rel="icon" type="image/png" href="{{ asset('images/Hypnos_logo.png') }}">
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -66,7 +66,6 @@
                     <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
                 </li>
 
-
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_register') }}">Enregistrez-vous</a>
@@ -79,12 +78,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
             </li>
-
-
         </ul>
-
     </nav>
-
 </head>
 <body class="container-fluid">
 {% block body %}

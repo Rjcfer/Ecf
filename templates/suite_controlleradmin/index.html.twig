@@ -3,23 +3,21 @@
 {% block title %}Suites{% endblock %}
 
 {% block body %}
-    <h1>Suite index</h1>
+    <h1 class="text-center">Liste de suites de votre hotel</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Occupied</th>
-                <th>OccupiedBy</th>
-                <th>Price</th>
-                <th>PicturesUrl</th>
-                <th>Title</th>
-                <th>BookingUrl</th>
+                <th>Nom</th>
+                <th>Occupé</th>
+                <th>occupé par</th>
+                <th>Prix</th>
+                <th>Titre</th>
+                <th>Booking</th>
                 <th>Description</th>
                 <th>Hotel_id</th>
-                <th>MainPictureUrl</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -27,15 +25,13 @@
             <tr>
                 <td>{{ suite.id }}</td>
                 <td>{{ suite.name }}</td>
-                <td>{{ suite.occupied ? 'Yes' : 'No' }}</td>
+                <td>{{ suite.occupied ? 'Oui' : 'Non' }}</td>
                 <td>{{ suite.occupiedBy }}</td>
                 <td>{{ suite.price }}</td>
-                <td>{{ suite.picturesUrl ? suite.picturesUrl|json_encode : '' }}</td>
                 <td>{{ suite.Title }}</td>
                 <td>{{ suite.bookingUrl }}</td>
                 <td>{{ suite.description }}</td>
                 <td>{{ suite.hotelId }}</td>
-                <td>{{ suite.mainPictureUrl }}</td>
                 <td>
                     <a href="{{ path('app_suite_controlleradmin_show', {'id': suite.id}) }}">show</a>
                     <a href="{{ path('app_suite_controlleradmin_edit', {'id': suite.id}) }}">edit</a>
@@ -43,7 +39,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="12">no records found</td>
+                <td colspan="12">Rien n'a été trouvé</td>
             </tr>
         {% endfor %}
         </tbody>
