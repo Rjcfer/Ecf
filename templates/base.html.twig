@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Welcome!{% endblock %}</title>
-    <link rel="icon" href="./assets/img/Hypnos_logo.png">
+    <link rel="icon"
+          href="./assets/img/Hypnos_logo.png"">
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
     <nav class="navbar navbar-expand navbar-light bg-light">
         <a class="Home" href="{{ path('app_home_page') }}">Home</a>
         <ul class="navbar-nav mr-auto">
@@ -75,9 +79,6 @@
             <li class="nav-item active">
                 <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_reservation_new') }}">Réservez</a>
-            </li>
 
 
         </ul>
@@ -89,9 +90,5 @@
 {% block body %}
 
 {% endblock %}
-
 </body>
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-{% endblock %}
 </html>
