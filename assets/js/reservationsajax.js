@@ -42,7 +42,7 @@ endListener.forEach(item => {
         const diffTime = Math.abs(eDate - sDate);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         let priceOf = parseInt(suites.children[suites.selectedIndex].className)
-        if (!isNaN(diffDays) && (sDate < eDate)) {
+        if (!isNaN(diffDays) && (sDate <= eDate)) {
 
             let sId = suites.children[suites.selectedIndex].id;
             let url = '/reservation/getdispo/' + sId;
