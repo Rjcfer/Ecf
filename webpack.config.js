@@ -1,4 +1,5 @@
 const Encore = require('@symfony/webpack-encore');
+const $ = require('jquery');
 
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -24,6 +25,12 @@ Encore
     .addEntry('datepicker', [
         './assets/js/datepicker.js'
     ])
+    .addEntry('reservationsajax', [
+        './assets/js/reservationsajax.js'
+    ])
+    .addEntry('bootstrap', [
+        './assets/bootstrap.js'
+    ])
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -34,6 +41,7 @@ Encore
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
+    // .disableSingleRuntimeChunk()
 
     /*
      * FEATURE CONFIG
@@ -72,7 +80,12 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
+    .autoProvideVariables({
+        $: 'jquery',
+        jQuery: 'jquery',
+        'window.jQuery': 'jquery',
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

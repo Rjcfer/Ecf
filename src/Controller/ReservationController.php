@@ -171,6 +171,8 @@ class ReservationController extends AbstractController
         $suite = $em->getRepository(Suite::class)->find($suiteId);
         $reservationsList = $em->getRepository(Reservation::class)->findAll();
         $isAvailable = true;
+
+        //confirmation if is array and if given dates are availables
         if (is_array($reservationsList)) {
             foreach ($reservationsList as $r) {
                 if ($r->getSuite() == $suite) {
@@ -184,6 +186,8 @@ class ReservationController extends AbstractController
                     }
                 }
             }
+        }else{
+            $isAvailable = false;
         }
         return $this->json(['code' => 200, 'message' => 'ok', 'isAvailable' => $isAvailable,
             'edate' => $eDate, 'end' => $end, 'sdate' => $sDate, 'start' => $sDate], 200);

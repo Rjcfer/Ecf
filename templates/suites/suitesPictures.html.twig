@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ suite.name }}{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h2>{{ suite.name }}</h2>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        {% for img in suite.picturesUrl %}
+            <div class="col mx-1 my-1">
+                <img class="rounded-3 " alt="Qries" src="{{ img }}" height="300">
+            </div>
+        {% endfor %}
+    </div>
+
+    <div id="carouselImg" class="carousel slide" data-ride="carousel" data-interval="2000">
+        <div class="carousel-inner">
+            {% for img in suite.picturesUrl %}
+                <div class="carousel-item ">
+                    toto
+                    <img src="{{ img }}" class="d-block w-100" alt="...">
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    {% block javascripts %}
+        <script>
+            window.onload = function () {
+                if (window.jQuery) {
+                    // jQuery is loaded
+                    alert("Yeah!");
+                } else {
+                    // jQuery is not loaded
+                    alert("Doesn't Work");
+                }
+            }
+        </script>
+        {{ encore_entry_script_tags('app') }}
+        {{ encore_entry_script_tags('bootstrap') }}
+    {% endblock %}
+{% endblock %}
