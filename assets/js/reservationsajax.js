@@ -1,4 +1,3 @@
-
 let hotel = document.querySelector('#hID');
 let suites = document.querySelector('#sID');
 let price = document.querySelector('#price');
@@ -25,6 +24,7 @@ hotel.addEventListener('change', function (event) {
         sOpt.innerHTML = 'Suite';
         suites.appendChild(sOpt);
         suiteList.forEach(e => {
+
             let opt = document.createElement('option');
             opt.className = e.price;
             opt.value = e.id;
@@ -53,6 +53,7 @@ endListener.forEach(item => {
             }).then(function (response) {
                 let data = response.data;
                 let isAvailable = data.isAvailable;
+                console.log(data);
                 if (!isAvailable) {
                     okBtn.disabled = true;
                     okBtn.style.display = 'none';
@@ -74,4 +75,5 @@ endListener.forEach(item => {
         }
         nPrice.textContent = priceOf + '$';
     })
+
 })

@@ -176,9 +176,16 @@ class ReservationController extends AbstractController
         if (is_array($reservationsList)) {
             foreach ($reservationsList as $r) {
                 if ($r->getSuite() == $suite) {
-                    $end = $r->getStartDate()->getTimestamp();
-                    $start = $r->getEndDate()->getTimestamp();
-                    if ($start >= $sDate && $start <= $end) {
+                    $start = $r->getStartDate()->getTimestamp();
+                    $end = $r->getEndDate()->getTimestamp();
+
+                    if ($start >= $sDate && $start <= $eDate) {
+                        $isAvailable = false;
+                    }
+                    if ($start <= $sDate && $sDate <= $end) {
+                        $isAvailable = false;
+                    }
+                    if ($eDate >= $end && $sDate <= $start) {
                         $isAvailable = false;
                     }
                     if ($end >= $sDate && $end <= $eDate) {
@@ -189,7 +196,6 @@ class ReservationController extends AbstractController
         } else {
             $isAvailable = false;
         }
-        return $this->json(['code' => 200, 'message' => 'ok', 'isAvailable' => $isAvailable,
-            'edate' => $eDate, 'end' => $end, 'sdate' => $sDate, 'start' => $sDate], 200);
+        return $this->json(['code' => 200, 'message' => 'ok', 'isAvailable' => $isAvailable], 200);
     }
 }
