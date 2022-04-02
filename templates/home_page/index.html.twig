@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomePageController!{% endblock %}
+{% block title %}Hypnos{% endblock %}
 
 {% block body %}
 
 
     <div class="row justify-content-center">
         {% for hotel in hotelList %}
-            <div  class="col-md-4 col-12 bg-light border rounded mx-1 my-1 shadow text-center  ">
+            <div  class="col-md-4 col-12 bg-light border rounded mx-2 my-2 shadow text-center  ">
             <a class="text-decoration-none text-black" href="{{ path('show_suites', {'idHotel': hotel.id}) }}"
               >
                 <div class="row justify-content-center">
@@ -36,6 +36,11 @@
                     </div>
                     <div class="col p-2">
                         <a class="btn btn-outline-primary btn-sm" href="{{ path('hotel_edit', {'id': hotel.id }) }}"> Modifier</a>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            id: {{ hotel.id }}
+                        </div>
                     </div>
                 {% endif %}
             </div>

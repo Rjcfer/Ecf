@@ -26,8 +26,8 @@ class SuitesController extends AbstractController
 //methode qui remet la suite a libre a la fin du delai de reservation
         foreach ($suitesList as $suite) {
             foreach ($reservationList as $reservation) {
-                $dateDB = date_format($reservation->getEndDate(),"Y-m-d");
-                if (($dateDB >date("Y-m-d")) && $reservation->getSuite() == $suite) {
+                $dateDB = date_format($reservation->getEndDate(), "Y-m-d");
+                if (($dateDB > date("Y-m-d")) && $reservation->getSuite() == $suite) {
                     $suite->setOccupiedBy("");
                     $suite->setOccupied(false);
                     $em->persist($suite);
@@ -40,6 +40,22 @@ class SuitesController extends AbstractController
         return $this->render('suites/index.html.twig', [
             'controller_name' => 'SuitesController',
             'suitesList' => $suitesList
+        ]);
+    }
+
+    /**
+     * @Route("suitespictures/{idSuite}", name="show_pictures")
+     */
+    public function suitePictures(int $idSuite, ManagerRegistry $doctrine): Response
+    {
+
+        $em = $doctrine->getManager();
+        $suite = $em->getRepository(Suite::class)->find($idSuite);
+        $reservationList = $em->getRepository(Reservation::class)->findAll();
+
+        return $this->render('suites/suitesPictures.html.twig', [
+            'controller_name' => 'SuitesController',
+            'suite' => $suite
         ]);
     }
 

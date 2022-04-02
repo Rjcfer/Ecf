@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello SuitesController!{% endblock %}
+{% block title %}Suites{% endblock %}
 {% block body %}
     <style>
     </style>
@@ -9,15 +9,15 @@
         {% for s in suitesList %}
             <div class="col-md-4 bg-light border rounded mx-1 my-1 shadow text-center ">
                 <div class="row justify-content-center">
-                    <div class="col ">
+                    <div class="col">
 
                         <h3 class="h3">{{ s.Title }} </h3>
                     </div>
                     <div class="row ">
                         <div class="col mx-1 my-1">
-                            <a href="{{ path('show_suites', {'idHotel': s.id}) }}">
-                                <img class="card-img" alt="Qries" src="{{ s.mainPictureUrl }}"
-                                     width=150" height="150">
+                            <a href="{{ path('show_pictures', {'idSuite': s.id}) }}">
+                                <img alt="Qries" src="{{ s.mainPictureUrl }}"
+                                     height="150">
                             </a>
                         </div>
                     </div>

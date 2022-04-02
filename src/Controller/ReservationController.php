@@ -36,20 +36,17 @@ class ReservationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sId = ($_POST['sID']);
-            $hId = ($_POST['hID']);
             $suite = $em->getRepository(Suite::class)->find($sId);
-            $hotel = $em->getRepository(Hotel::class)->find($hId);
             $reservation->setSuite($suite);
-
             $reservationRepository->add($reservation);
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            //  return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('reservation/new.html.twig', [
             'reservation' => $reservation,
             'form' => $form,
             'hotelList' => $hotelList,
-            'suiteList'=>$suiteList
+            'suiteList' => $suiteList
 
         ]);
     }
@@ -76,7 +73,7 @@ class ReservationController extends AbstractController
         }
 
         return $this->renderForm('reservation/new.html.twig', [
-            'suiteList'=>$suiteList,
+            'suiteList' => $suiteList,
             'hotelList' => $hotelList,
             'reservation' => $reservation,
             'form' => $form,
@@ -84,7 +81,7 @@ class ReservationController extends AbstractController
     }
 
     #[Route('/newwithoutuserId/{idHotel}/{idSuite}', name: 'app_reservation_newwithoutuserId', methods: ['GET', 'POST'])]
-    public function newWithoutUserId(int $idHotel, int $idSuite, Request $request, ReservationRepository $reservationRepository, ManagerRegistry $doctrine): Response
+    public function newWithoutUserId(int $idHotel, int $idSuite, Request $request, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
         $suiteList = [$em->getRepository(Suite::class)->find($idSuite)];
@@ -104,7 +101,7 @@ class ReservationController extends AbstractController
 
         return $this->renderForm('reservation/new.html.twig', [
             'hotelList' => $hotelList,
-            'suiteList'=>$suiteList,
+            'suiteList' => $suiteList,
             'reservation' => $reservation,
             'form' => $form,
         ]);
@@ -147,15 +144,58 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 
+//use to ajax requests
     #[Route('/getsuite/{hotelId}', name: 'app_reservation_getsuiteList', methods: ['POST', 'GET'])]
     public function findOcuupiedOrNot(int $hotelId, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
         $suiteList = $em->getRepository(Suite::class)->findBy(['hotel_id' => $hotelId]);
         $arrayToSend = [];
+
         foreach ($suiteList as $suite) {
-            $arrayToSend[] = ['name' => $suite->getname(), 'id' => $suite->getId(),'price'=>$suite->getPrice()];
+            $arrayToSend[] = ['name' => $suite->getname(), 'id' => $suite->getId(), 'price' => $suite->getPrice()];
         }
-        return $this->json(['code' => 200, 'message' => 'ok','suites'=>$arrayToSend], 200);
+        return $this->json(['code' => 200, 'message' => 'ok', 'suites' => $arrayToSend], 200);
+    }
+
+    #[Route('/getdispo/{suiteId}', name: 'app_reservation_getReservationsList', methods: ['POST', 'GET'])]
+    public function reservationsDates(int $suiteId, ManagerRegistry $doctrine, Request $request): Response
+    {
+
+        $data = $request->getContent();
+        $data = json_decode($data, true);
+        $eDate = strtotime($data["endDate"]);
+        $sDate = strtotime($data["startDate"]);
+        //get reservations by suite id to send like a json and use ajax in front
+        $em = $doctrine->getManager();
+        $suite = $em->getRepository(Suite::class)->find($suiteId);
+        $reservationsList = $em->getRepository(Reservation::class)->findAll();
+        $isAvailable = true;
+
+        //confirmation if is array and if given dates are availables
+        if (is_array($reservationsList)) {
+            foreach ($reservationsList as $r) {
+                if ($r->getSuite() == $suite) {
+                    $start = $r->getStartDate()->getTimestamp();
+                    $end = $r->getEndDate()->getTimestamp();
+
+                    if ($start >= $sDate && $start <= $eDate) {
+                        $isAvailable = false;
+                    }
+                    if ($start <= $sDate && $sDate <= $end) {
+                        $isAvailable = false;
+                    }
+                    if ($eDate >= $end && $sDate <= $start) {
+                        $isAvailable = false;
+                    }
+                    if ($end >= $sDate && $end <= $eDate) {
+                        $isAvailable = false;
+                    }
+                }
+            }
+        } else {
+            $isAvailable = false;
+        }
+        return $this->json(['code' => 200, 'message' => 'ok', 'isAvailable' => $isAvailable], 200);
     }
 }

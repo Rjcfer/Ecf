@@ -2,21 +2,28 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Welcome!{% endblock %}</title>
- <link rel="icon" href="./assets/img/Hypnos_logo.png">
+    <link rel="icon" type="image/png" href="{{ asset('images/Hypnos_logo.png') }}">
     {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
+    {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+    {% endblock %}
     <nav class="navbar navbar-expand navbar-light bg-light">
-        <a class="Home" href="{{ path('app_home_page') }}">Home</a>
         <ul class="navbar-nav mr-auto">
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{ path('app_home_page') }}">
+                    <i class="fa-solid fa-house"></i>
+                </a>
+            </li>
             {% if is_granted('ROLE_SUPER_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
                 </li>
 
 
@@ -34,13 +41,13 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
 
 
             {% elseif is_granted('ROLE_ADMIN') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
                 </li>
 
                 <li class="nav-item">
@@ -50,48 +57,36 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
 
             {% elseif is_granted('ROLE_CLIENT') %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Reservations</a>
+                    <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_logout') }}">Deconnectez-vous</a>
+                    <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
                 </li>
-
 
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('app_register') }}">Enregistrez-vous</a>
+                    <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ path('app_login') }}">Connectez-vous </a>
+                <li class="nav-item ">
+                    <a class="nav-link" href="{{ path('app_login') }}">Connexion </a>
                 </li>
 
             {% endif %}
-            <li class="nav-item active">
+            <li class="nav-item ">
                 <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ path('app_reservation_new') }}">Réservez</a>
-            </li>
-
-
         </ul>
-
     </nav>
-
 </head>
 <body class="container-fluid">
 {% block body %}
 
 {% endblock %}
-
 </body>
-{% block javascripts %}
-    {{ encore_entry_script_tags('app') }}
-{% endblock %}
 </html>

@@ -3,21 +3,41 @@
     "app": {
       "js": [
         "/build/runtime.js",
-        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-7db861.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_dom--53df77.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-09d390.js",
+        "/build/vendors-node_modules_fortawesome_fontawesome-free_js_all_js-node_modules_bootstrap_dist_js_bo-e4fbe9.js",
         "/build/app.js"
       ],
       "css": [
+        "/build/vendors-node_modules_fortawesome_fontawesome-free_js_all_js-node_modules_bootstrap_dist_js_bo-e4fbe9.css",
         "/build/app.css"
       ]
     },
     "datepicker": {
       "js": [
         "/build/runtime.js",
+        "/build/vendors-node_modules_jquery_dist_jquery_js.js",
         "/build/vendors-node_modules_bootstrap-datepicker_js_bootstrap-datepicker_js-node_modules_bootstrap-d-030b2b.js",
         "/build/datepicker.js"
       ],
       "css": [
         "/build/vendors-node_modules_bootstrap-datepicker_js_bootstrap-datepicker_js-node_modules_bootstrap-d-030b2b.css"
+      ]
+    },
+    "reservationsajax": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_dom--53df77.js",
+        "/build/reservationsajax.js"
+      ]
+    },
+    "bootstrap": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_core-js_internals_array-iteration_js-node_modules_core-js_internals_dom--53df77.js",
+        "/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_ob-09d390.js",
+        "/build/bootstrap.js"
       ]
     }
   }
