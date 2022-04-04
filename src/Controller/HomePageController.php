@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomePageController extends AbstractController
 {
+
     #[Route('/', name: 'app_home_page')]
     public function index(ManagerRegistry $doctrine): Response
     {
@@ -20,7 +21,7 @@ class HomePageController extends AbstractController
         $hotelList = $em->getRepository(Hotel::class)->findAll();
 
         return $this->render('home_page/index.html.twig', [
-           'hotelList'=>$hotelList
+            'hotelList' => $hotelList
         ]);
     }
 }
