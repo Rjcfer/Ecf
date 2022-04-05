@@ -33,7 +33,7 @@ class ContactController extends AbstractController
             $mailer->send($message);
 
             $this->addFlash('success', 'Votre message a été envoyé');
-            sleep(5); // small pause to say that email is send
+            //sleep(5); // small pause to say that email is send
             return $this->redirectToRoute('app_home_page', [], Response::HTTP_SEE_OTHER);
         }
 
