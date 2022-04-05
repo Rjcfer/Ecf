@@ -1,0 +1,48 @@
+{% block stylesheet %}
+    {{ encore_entry_link_tags('datepicker') }}
+{% endblock %}
+{{ form_start(form) }}
+<div class="col">
+    <div class="row text-center justify-content-center">
+        <div class="col-sm-4 ">
+            {{ form_row(form.startDate, { 'id':'startDate','attr': {'class': 'endListener'}}) }}
+        </div>
+        <div class="col-sm-4">
+            {{ form_row(form.endDate, {'id':'endDate','attr': {'class': 'endListener'}}) }}
+        </div>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col ">
+        <p class="text-center">Hotel</p>
+        <select id="hID" name="hID">
+            <option class="hotel" value="0">Hotel</option>
+            {% for hotel in hotelList %}
+                <option class="hotel" value="{{ hotel.id }}">{{ hotel.name }}</option>
+            {% endfor %}
+        </select>
+        <p>Suite id</p>
+        <select id="sID" name="sID" class="endListener">
+        </select>
+    </div>
+</div>
+<div class="row">
+    <div class="col text-center">
+        <h3 class="h3"> Prix total</h3>
+        <p id="price">0</p>
+        <h3 class="h3">Prix/nuit</h3>
+        <p id="nPrice">0</p>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col">
+        <button id="okBtn" class="btn btn-primary">{{ button_label|default('Reservez') }}</button>
+        <button id="iBtn" class="btn btn-danger btn-sm" disabled>Dates indiponibles</button>
+    </div>
+</div>
+{{ form_end(form) }}
+{% block javascripts %}
+    {{ encore_entry_script_tags('datepicker') }}
+    {{ encore_entry_script_tags('reservationsajax') }}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %}

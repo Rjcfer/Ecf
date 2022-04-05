@@ -96,6 +96,7 @@ class ReservationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->persist($reservation);
             $em->flush();
+            $this->addFlash('success', 'Reservation terminé');
             return $this->redirect($this->generateUrl('app_home_page'));
         }
 
