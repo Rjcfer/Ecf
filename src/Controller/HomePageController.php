@@ -19,7 +19,6 @@ class HomePageController extends AbstractController
         $em = $doctrine->getManager();
         // all hotels on database
         $hotelList = $em->getRepository(Hotel::class)->findAll();
-
         return $this->render('home_page/index.html.twig', [
             'hotelList' => $hotelList
         ]);

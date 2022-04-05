@@ -83,12 +83,13 @@
             </li>
         </ul>
     </nav>
+    {% for message in app.flashes('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
 </head>
 <body class="container-fluid">
 {% block body %}
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success">message</div>
-    {% endfor %}
+
 {% endblock %}
 </body>
 </html>
