@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Form\ContactType;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,8 +33,7 @@ class ContactController extends AbstractController
             $mailer->send($message);
 
             $this->addFlash('success', 'Votre message a été envoyé');
-
-            return $this->redirectToRoute($this->generateUrl('app_home_page'));
+            return $this->redirectToRoute('app_home_page', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('contact/index.html.twig', [
