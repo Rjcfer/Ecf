@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -26,6 +27,15 @@ class ContactType extends AbstractType
             ->add('msg', TextareaType::class, [
                 'label' => 'Message',
                 'attr' => ['rows' => 6],
+            ])
+            ->add('subject', ChoiceType::class, [
+                'label' => 'Motif',
+                'choices' => [
+                    'Je souhaite poser une réclamation' => 'Je souhaite poser une réclamation',
+                    'Je souhaite commander un service supplémentaire' => 'Je souhaite commander un service supplémentaire',
+                    'Je souhaite en savoir plus sur une suite' => 'Je souhaite en savoir plus sur une suite',
+                    'J’ai un souci avec cette application' => 'J’ai un souci avec cette application',
+                ]
             ]);
     }
 

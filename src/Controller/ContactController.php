@@ -23,10 +23,10 @@ class ContactController extends AbstractController
             $contactFormData = $form->getData();
 
             $message = (new Email())
-                ->from($contactFormData['email'])
+                ->from('ricardoqwerty69@gmail.com') // sendgrid n'accepte que les mails des adresses verifiers
                 ->to('ricardoqwerty69@gmail.com')
-                ->subject('vous avez reçu un email')
-                ->text('Sender : ' . $contactFormData['email'] . \PHP_EOL .
+                ->subject($contactFormData['subject'])
+                ->text('Expediteur : ' . $contactFormData['email'] . \PHP_EOL .
                     $contactFormData['msg'],
                     'text/plain');
             $mailer->send($message);
