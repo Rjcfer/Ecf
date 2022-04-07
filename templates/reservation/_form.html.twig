@@ -12,28 +12,43 @@
         </div>
     </div>
 </div>
-<div class="row text-center">
-    <div class="col ">
-        <p class="text-center">Hotel</p>
-        <select id="hID" name="hID">
-            <option class="hotel" value="0">Hotel</option>
-            {% for hotel in hotelList %}
+{% if hotelList is defined %}
+    <div class="row text-center">
+        <div class="col ">
+            <p class="text-center">Hotel</p>
+            <select id="hID" name="hID">
+                <option class="hotel" value="0">Hotel</option>
+                {% for hotel in hotelList %}
+                    <option class="hotel" value="{{ hotel.id }}">{{ hotel.name }}</option>
+                {% endfor %}
+            </select>
+            <p>Suite</p>
+            <select id="sID" name="suiteID" class="endListener">
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-center">
+            <h3 class="h3"> Prix total</h3>
+            <p id="price">0</p>
+            <h3 class="h3">Prix/nuit</h3>
+            <p id="nPrice">0</p>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        <div class="col text-center">
+            <p class="text-center">Hotel</p>
+            <select id="hID" name="hID">
                 <option class="hotel" value="{{ hotel.id }}">{{ hotel.name }}</option>
-            {% endfor %}
-        </select>
-        <p>Suite id</p>
-        <select id="sID" name="sID" class="endListener">
-        </select>
+            </select>
+            <p>Suite </p>
+            <select id="sID" name="sID" class="endListener">
+                <option class="suite" value="{{ suite.id }}">{{ suite.name }}</option>
+            </select>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col text-center">
-        <h3 class="h3"> Prix total</h3>
-        <p id="price">0</p>
-        <h3 class="h3">Prix/nuit</h3>
-        <p id="nPrice">0</p>
-    </div>
-</div>
+{% endif %}
 <div class="row text-center">
     <div class="col">
         <button id="okBtn" class="btn btn-primary">{{ button_label|default('Reservez') }}</button>

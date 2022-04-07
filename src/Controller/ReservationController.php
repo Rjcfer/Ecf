@@ -123,7 +123,11 @@ class ReservationController extends AbstractController
     {
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
-
+        $hotel = $reservation->getSuite()->getHotel();
+        $suite = $reservation->getSuite();
+        $sDate = $reservation->getStartDate();
+        $dateOfTheDay = date("Y m d");
+        echo($dateOfTheDay);
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->add($reservation);
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
@@ -132,6 +136,8 @@ class ReservationController extends AbstractController
         return $this->renderForm('reservation/edit.html.twig', [
             'reservation' => $reservation,
             'form' => $form,
+            'hotel' => $hotel,
+            'suite' => $suite
         ]);
     }
 

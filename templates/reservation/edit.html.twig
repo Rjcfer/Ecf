@@ -3,11 +3,11 @@
 {% block title %}Modification Reservation{% endblock %}
 
 {% block body %}
-    <h1>Modification Reservation</h1>
+    <h1 class="text-center h1">Modification Reservation</h1>
 
-    {{ include('reservation/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('reservation/_form.html.twig', {'button_label': 'Mettre à jour '}) }}
 
-    <a href="{{ path('app_reservation_index') }}">Retour a la liste</a>
+    <a class="btn btn-primary text-center mt-1" href="{{ path('app_reservation_index') }}">Retour a la liste</a>
 
     {{ include('reservation/_delete_form.html.twig') }}
 {% endblock %}
