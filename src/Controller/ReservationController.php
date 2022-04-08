@@ -38,13 +38,27 @@ class ReservationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sId = ($_POST['suiteID']);
-            $name = ($_POST['reservationName']);
+            // confirm if the user send's me a name for the reservation
+            if (isset($_POST['reservationName'])) {
+                $name = ($_POST['reservationName']);
+            } else {
+                $name = null;
+            }
             $suite = $em->getRepository(Suite::class)->find($sId);
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
+            $user = $this->getUser();
+//confirm if user is connected and get his id
+            if ($user != null) {
+                $userId = $user->getId();
+            } else {
+                $userId = null;
+            }
+
             if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
                 $reservation->setReservationName($name);
                 $reservation->setSuite($suite);
+                $reservation->setUserId($userId);
                 $reservationRepository->add($reservation);
                 return $this->redirect($this->generateUrl('app_home_page'));
             }
@@ -56,7 +70,6 @@ class ReservationController extends AbstractController
             'form' => $form,
             'hotelList' => $hotelList,
             'suiteList' => $suiteList
-
         ]);
     }
 
