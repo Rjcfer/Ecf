@@ -144,7 +144,16 @@ class ReservationController extends AbstractController
     #[Route('/{id}', name: 'app_reservation_delete', methods: ['POST'])]
     public function delete(Request $request, Reservation $reservation, ReservationRepository $reservationRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token'))) {
+        $canDel = false;
+        $sDate = $reservation->getStartDate()->getTimestamp();
+        $dateOfTheDay = strtotime('now');
+        $limitDate = strtotime('-3 days', $sDate);
+        if ($dateOfTheDay < $limitDate) {
+            $canDel = true;
+        }
+        
+        // never trust user inputs so i try the dates again
+        if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token')) && $canDel) {
             $reservationRepository->remove($reservation);
         }
 
@@ -210,15 +219,15 @@ class ReservationController extends AbstractController
     public function canDelete(int $reservationId, ManagerRegistry $doctrine): Response
     {
         $canDel = false;
-       $em = $doctrine->getManager();
+        $em = $doctrine->getManager();
         $reservation = $em->getRepository(Reservation::class)->find($reservationId);
         $sDate = $reservation->getStartDate()->getTimestamp();
-        $dateOfTheDay = strtotime('-3 days');
-
-        if ($dateOfTheDay  < $sDate) {
+        $dateOfTheDay = strtotime('now');
+        $limitDate = strtotime('-3 days', $sDate);
+        if ($dateOfTheDay < $limitDate) {
             $canDel = true;
         }
 
-        return $this->json(['code' => 200, 'canDelete' => $canDel], 200);
+        return $this->json(['code' => 200, 'canDelete' => $canDel, 'dateOfTheDay' => $dateOfTheDay, '$limitDate' => $limitDate], 200);
     }
 }

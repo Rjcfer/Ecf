@@ -1,14 +1,16 @@
 <form method="post" action="{{ path('app_reservation_delete', {'id': reservation.id}) }}"
       onsubmit="return confirm('Voulez vous vraiment annuler?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
-    <div class="row text-center mt-3">
+    <div class="row text-center mt-3 ">
         <div class="col">
             <button class="btn btn-danger canIChange">Supprimer</button>
         </div>
     </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-6 ">
+            <p class=" bg-danger text-center bg-gradient rounded sorry" > Vous ne pouvez pas supprimer a moins de 3 jours de la date de
+                reservation </p>
+        </div>
+    </div>
 
 </form>
-{% block javascripts %}
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    {{ encore_entry_script_tags('deleteOrModifyReservations') }}
-{% endblock %}
