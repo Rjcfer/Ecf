@@ -38,10 +38,12 @@ class ReservationController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $sId = ($_POST['suiteID']);
+            $name = ($_POST['reservationName']);
             $suite = $em->getRepository(Suite::class)->find($sId);
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
             if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
+                $reservation->setReservationName($name);
                 $reservation->setSuite($suite);
                 $reservationRepository->add($reservation);
                 return $this->redirect($this->generateUrl('app_home_page'));

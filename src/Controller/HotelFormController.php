@@ -25,7 +25,7 @@ class HotelFormController extends AbstractController
             $em->flush();
         }
 
-        return $this->render('hotel_form/form.html.twig', [
+        return $this->render('hotel_form/index.html.twig', [
             'form' => $form->createView(),
         ]);
     }

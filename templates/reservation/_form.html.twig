@@ -44,17 +44,28 @@
             </select>
             <p>Suite </p>
             <select id="sID" name="sID" class="endListener">
-                <option  class="suite" value="{{ suite.id }}">{{ suite.name }}</option>
+                <option class="suite" value="{{ suite.id }}">{{ suite.name }}</option>
             </select>
         </div>
     </div>
 {% endif %}
-<div class="row text-center">
+{% if not is_granted('ROLE_CLIENT') %}
+    <div class="row text-center mt-2">
+        <div class="col">
+            <p>Votre nom: </p>
+            <input type="text" id="reservationName" name="reservationName" required
+                   minlength="4" maxlength="8" size="10">
+        </div>
+    </div>
+{% endif %}
+<div class="row text-center mt-3">
     <div class="col">
         <button id="okBtn" class="btn btn-primary">{{ button_label|default('Reservez') }}</button>
         <button id="iBtn" class="btn btn-danger btn-sm" disabled>Dates indiponibles</button>
     </div>
 </div>
+
+
 {{ form_end(form) }}
 {% block javascripts %}
     {{ encore_entry_script_tags('datepicker') }}
