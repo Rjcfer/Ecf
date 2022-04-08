@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HotelPageController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+    <div class="rox">
+        <div class="col">
+            <h1 class="h1 text-center">{{ hotel.name }}</h1>
+        </div>
+    </div>
+    <div class="rox">
+        <div class="col">
+            <p class="text-center">Le {{ hotel.name }} situé a situé à {{ hotel.city }} vous souhaite la bienvenue.</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <img class="rounded-3" src="{{ hotel.pictureUrl }}">
+        </div>
+    </div>
+    <div class="rox">
+        <div class="col">
+            <p class="text-center">A propos</p>
+            <p class="text-center">{{ hotel.description }}</p>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col">
+            <a class="btn btn-outline-primary" href="{{ path('show_suites', {'idHotel': hotel.id}) }}"
+            >Les suites</a>
+        </div>
+    </div>
+{% endblock %}

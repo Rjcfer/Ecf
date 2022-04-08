@@ -53,7 +53,6 @@ endListener.forEach(item => {
             }).then(function (response) {
                 let data = response.data;
                 let isAvailable = data.isAvailable;
-                console.log(data);
                 if (!isAvailable) {
                     okBtn.disabled = true;
                     okBtn.style.display = 'none';

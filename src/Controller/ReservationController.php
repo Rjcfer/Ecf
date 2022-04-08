@@ -7,7 +7,9 @@ use App\Entity\Reservation;
 use App\Entity\Suite;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
+use ContainerLUt1Pge\getDoctrine_Orm_DefaultEntityManagerService;
 use Doctrine\Persistence\ManagerRegistry;
+use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,11 +37,16 @@ class ReservationController extends AbstractController
         $suiteList = $em->getRepository(Suite::class)->findAll();
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $sId = ($_POST['sID']);
+            $sId = ($_POST['suiteID']);
             $suite = $em->getRepository(Suite::class)->find($sId);
-            $reservation->setSuite($suite);
-            $reservationRepository->add($reservation);
-            //  return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+            $sDate = ($form->get('startDate')->getData())->getTimestamp();
+            $eDate = ($form->get('endDate')->getData())->getTimestamp();
+            if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
+                $reservation->setSuite($suite);
+                $reservationRepository->add($reservation);
+                return $this->redirect($this->generateUrl('app_home_page'));
+            }
+            return $this->redirect($this->generateUrl('app_home_page'));
         }
 
         return $this->renderForm('reservation/new.html.twig', [
@@ -49,6 +56,39 @@ class ReservationController extends AbstractController
             'suiteList' => $suiteList
 
         ]);
+    }
+
+// method allows me to show id a suite is available or not
+    public function verifyIfIsAvailable($sDate, $eDate, $suite, ManagerRegistry $doctrine)
+    {
+        $em = $doctrine->getManager();
+        $reservationsList = $em->getRepository(Reservation::class)->findAll();
+        //confirmation if is array and if given dates are availables
+        if (is_array($reservationsList)) {
+            foreach ($reservationsList as $r) {
+                if ($r->getSuite() == $suite) {
+                    $start = $r->getStartDate()->getTimestamp();
+                    $end = $r->getEndDate()->getTimestamp();
+
+                    if ($start >= $sDate && $start <= $eDate) {
+                        return false;
+                    }
+                    if ($start <= $sDate && $sDate <= $end) {
+                        return false;
+                    }
+                    if ($eDate >= $end && $sDate <= $start) {
+                        return false;
+                    }
+                    if ($end >= $sDate && $end <= $eDate) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     #[Route('/newwithids/{idHotel}/{idSuite}/{idUser}', name: 'app_reservation_newwithids', methods: ['GET', 'POST'])]
@@ -67,8 +107,16 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($reservation);
-            $em->flush();
+            $sDate = ($form->get('startDate')->getData())->getTimestamp();
+            $eDate = ($form->get('endDate')->getData())->getTimestamp();
+            if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
+                $em->persist($reservation);
+                $em->flush();
+                $this->addFlash('success', 'Reservation terminé');
+                $em->persist($reservation);
+                $em->flush();
+                return $this->redirect($this->generateUrl('app_home_page'));
+            }
             return $this->redirect($this->generateUrl('app_home_page'));
         }
 
@@ -93,10 +141,16 @@ class ReservationController extends AbstractController
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($reservation);
-            $em->flush();
-            $this->addFlash('success', 'Reservation terminé');
+            $sDate = ($form->get('startDate')->getData())->getTimestamp();
+            $eDate = ($form->get('endDate')->getData())->getTimestamp();
+            if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
+                $em->persist($reservation);
+                $em->flush();
+                $this->addFlash('success', 'Reservation terminé');
+                return $this->redirect($this->generateUrl('app_home_page'));
+            }
             return $this->redirect($this->generateUrl('app_home_page'));
         }
 
@@ -108,6 +162,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
+//use to ajax requests
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
@@ -151,7 +206,7 @@ class ReservationController extends AbstractController
         if ($dateOfTheDay < $limitDate) {
             $canDel = true;
         }
-        
+
         // never trust user inputs so i try the dates again
         if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token')) && $canDel) {
             $reservationRepository->remove($reservation);
@@ -160,7 +215,6 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 
-//use to ajax requests
     #[Route('/getsuite/{hotelId}', name: 'app_reservation_getsuiteList', methods: ['POST', 'GET'])]
     public function findOcuupiedOrNot(int $hotelId, ManagerRegistry $doctrine): Response
     {
@@ -186,32 +240,8 @@ class ReservationController extends AbstractController
         $em = $doctrine->getManager();
         $suite = $em->getRepository(Suite::class)->find($suiteId);
         $reservationsList = $em->getRepository(Reservation::class)->findAll();
-        $isAvailable = true;
+        $isAvailable = $this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine);
 
-        //confirmation if is array and if given dates are availables
-        if (is_array($reservationsList)) {
-            foreach ($reservationsList as $r) {
-                if ($r->getSuite() == $suite) {
-                    $start = $r->getStartDate()->getTimestamp();
-                    $end = $r->getEndDate()->getTimestamp();
-
-                    if ($start >= $sDate && $start <= $eDate) {
-                        $isAvailable = false;
-                    }
-                    if ($start <= $sDate && $sDate <= $end) {
-                        $isAvailable = false;
-                    }
-                    if ($eDate >= $end && $sDate <= $start) {
-                        $isAvailable = false;
-                    }
-                    if ($end >= $sDate && $end <= $eDate) {
-                        $isAvailable = false;
-                    }
-                }
-            }
-        } else {
-            $isAvailable = false;
-        }
         return $this->json(['code' => 200, 'isAvailable' => $isAvailable], 200);
     }
 
