@@ -18,6 +18,8 @@ rid.forEach(item => {
     // online , we dont have the port online
     let urltorequest = protocol + '//' + hostname + "/reservation/candelete/" + id;
 
+    console.log(urltorequest);
+
     axios.get(urltorequest).then(function (response) {
         const canDelete = response.data.canDelete;
         console.log(response.data);
