@@ -9,10 +9,9 @@
         <thead>
         <tr>
             <th>Id</th>
-            <th>StartDate</th>
-            <th>EndDate</th>
-            <th>User_id</th>
-            <th>actions</th>
+            <th>De</th>
+            <th>Jusqu’à</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -20,20 +19,19 @@
             {% if is_granted('ROLE_USER') %}
                 {% if (reservation.getUserId() == app.user.id ) %}
                     <tr>
-                        <td>{{ reservation.id }}</td>
+                        <td class="rId">{{ reservation.id }}</td>
                         <td>{{ reservation.startDate ? reservation.startDate|date('Y-m-d') : '' }}</td>
                         <td>{{ reservation.endDate ? reservation.endDate|date('Y-m-d') : '' }}</td>
-                        <td>{{ reservation.userId }}</td>
                         <td>
-                            <a class="btn btn-sm btn-secondary" href="{{ path('app_reservation_show', {'id': reservation.id}) }}">config</a>
-                            <a class="btn btn-sm btn-secondary" href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">éditer</a>
+                            <a class="btn btn-sm btn-secondary" href="{{ path('app_reservation_show', {'id': reservation.id}) }}">Détailles</a>
+                            <a class="btn btn-sm btn-secondary" href="{{ path('app_reservation_edit', {'id': reservation.id}) }}">Éditer</a>
                         </td>
                     </tr>
                 {% endif %}
             {% endif %}
         {% else %}
             <tr>
-                <td colspan="5">no records found</td>
+                <td colspan="5">Désolé vous n'avais rien reservé</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -41,3 +39,4 @@
 
     <a class="btn btn-sm btn-success" href="{{ path('app_reservation_new') }}">+</a>
 {% endblock %}
+

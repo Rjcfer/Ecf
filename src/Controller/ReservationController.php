@@ -110,11 +110,14 @@ class ReservationController extends AbstractController
 
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
-    public function show(Reservation $reservation, Suite $suite): Response
+    public function show(Reservation $reservation): Response
     {
+        $suiteName = $reservation->getSuite()->getName();
+        $hotel = $reservation->getSuite()->getHotel();
         return $this->render('reservation/show.html.twig', [
             'reservation' => $reservation,
-            'suiteName' => $suite->getName(),
+            'suiteName' => $suiteName,
+            'hotel' => $hotel
         ]);
     }
 
@@ -125,9 +128,6 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
         $hotel = $reservation->getSuite()->getHotel();
         $suite = $reservation->getSuite();
-        $sDate = $reservation->getStartDate();
-        $dateOfTheDay = date("Y m d");
-        echo($dateOfTheDay);
         if ($form->isSubmitted() && $form->isValid()) {
             $reservationRepository->add($reservation);
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
@@ -162,7 +162,7 @@ class ReservationController extends AbstractController
         foreach ($suiteList as $suite) {
             $arrayToSend[] = ['name' => $suite->getname(), 'id' => $suite->getId(), 'price' => $suite->getPrice()];
         }
-        return $this->json(['code' => 200, 'message' => 'ok', 'suites' => $arrayToSend], 200);
+        return $this->json(['code' => 200, 'suites' => $arrayToSend], 200);
     }
 
     #[Route('/getdispo/{suiteId}', name: 'app_reservation_getReservationsList', methods: ['POST', 'GET'])]
@@ -203,6 +203,22 @@ class ReservationController extends AbstractController
         } else {
             $isAvailable = false;
         }
-        return $this->json(['code' => 200, 'message' => 'ok', 'isAvailable' => $isAvailable], 200);
+        return $this->json(['code' => 200, 'isAvailable' => $isAvailable], 200);
+    }
+
+    #[Route('/candelete/{reservationId}', name: 'app_reservation_canDelete', methods: ['POST', 'GET'])]
+    public function canDelete(int $reservationId, ManagerRegistry $doctrine): Response
+    {
+        $canDel = false;
+       $em = $doctrine->getManager();
+        $reservation = $em->getRepository(Reservation::class)->find($reservationId);
+        $sDate = $reservation->getStartDate()->getTimestamp();
+        $dateOfTheDay = strtotime('-3 days');
+
+        if ($dateOfTheDay  < $sDate) {
+            $canDel = true;
+        }
+
+        return $this->json(['code' => 200, 'canDelete' => $canDel], 200);
     }
 }

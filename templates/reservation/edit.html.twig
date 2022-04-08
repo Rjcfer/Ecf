@@ -4,10 +4,32 @@
 
 {% block body %}
     <h1 class="text-center h1">Modification Reservation</h1>
-
-    {{ include('reservation/_form.html.twig', {'button_label': 'Mettre à jour '}) }}
-
-    <a class="btn btn-primary text-center mt-1" href="{{ path('app_reservation_index') }}">Retour a la liste</a>
-
+    <h5 class="h5 text-center"> ID</h5>
+    <h5 class="h5 text-center rId">{{ reservation.id }}</h5>
+    {{ form_start(form) }}
+    <div class="col">
+        <div class="row text-center justify-content-center">
+            <div class="col-sm-4 ">
+                {{ form_row(form.startDate, { 'id':'startDate','attr': {'class': 'endListener'}}) }}
+            </div>
+            <div class="col-sm-4">
+                {{ form_row(form.endDate, {'id':'endDate','attr': {'class': 'endListener'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col">
+            <button id="okBtn" class="btn btn-primary canIChange">{{ button_label|default('Mettre a jour') }}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    <div class="row text-center">
+        <div class="col">
+            <a class="btn btn-primary text-center mt-1" href="{{ path('app_reservation_index') }}">Retour a la liste</a>
+        </div>
+    </div>
     {{ include('reservation/_delete_form.html.twig') }}
+    {% block javascripts %}
+        {{ encore_entry_script_tags('deleteOrModifyReservations') }}
+    {% endblock %}
 {% endblock %}

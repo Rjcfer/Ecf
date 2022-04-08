@@ -76,4 +76,5 @@ endListener.forEach(item => {
         nPrice.textContent = priceOf + '$';
     })
 
+
 })
