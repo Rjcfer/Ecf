@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HotelPageController!{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col">
+            <h1 class=" h1c text-center">{{ hotel.name }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p class="text-center">Le {{ hotel.name }} situé a situé à {{ hotel.city }} vous souhaite la bienvenue.</p>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col text-center">
+            <a href="{{ path('show_suites', {'idHotel': hotel.id}) }}"
+            >
+                <img class="rounded-3 img-fluid" src="{{ hotel.pictureUrl }}">
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <p class="text-center">A propos</p>
+            <p class="text-center">{{ hotel.description }}</p>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col">
+            <a class="btn btn-outline-primary" href="{{ path('show_suites', {'idHotel': hotel.id}) }}"
+            >Les suites</a>
+        </div>
+    </div>
+{% endblock %}

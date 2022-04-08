@@ -26,6 +26,9 @@ class Reservation
     #[ORM\ManyToOne(targetEntity: Suite::class, inversedBy: 'reservations')]
     private $suite;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $reservationName;
+
 
     public function getId(): ?int
     {
@@ -78,6 +81,18 @@ class Reservation
     public function setSuite(?Suite $suite): self
     {
         $this->suite = $suite;
+
+        return $this;
+    }
+
+    public function getReservationName(): ?string
+    {
+        return $this->reservationName;
+    }
+
+    public function setReservationName(?string $reservationName): self
+    {
+        $this->reservationName = $reservationName;
 
         return $this;
     }

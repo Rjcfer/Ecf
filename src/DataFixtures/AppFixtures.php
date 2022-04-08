@@ -22,7 +22,10 @@ class AppFixtures extends Fixture
         $randomHotelimg = ['https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
             'https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80',
             'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-            'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',];
+            'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+            'https://d1vp8nomjxwyf1.cloudfront.net/wp-content/uploads/sites/156/2021/11/24161112/33-Big-17052021-DSC_3554-Modifier-www.gauvin.pictures-1804x1200.jpg',
+            'https://www.kayak.fr/rimg/kimg/6f/df/3908b3bf-59bc3784.jpg?width=1366&height=768&crop=true',
+        ];
 
         $picturesSuite = ['https://images2.bovpg.net/fw/media/1/2/1/8/5/218513.jpg',
             'https://hotelbarcelosevillaevents.com/wp-content/uploads/2015/12/suite-1.jpg',
@@ -43,7 +46,7 @@ class AppFixtures extends Fixture
         ];
         $suitenames = ['Suite du maitre', 'Suite Paris', 'Suite champs-élysées', 'Suite champagne', 'Suite marne'];
         $titles = ['La belle', 'Le soleil levant', 'Douce nuit', 'Sunrise', 'The best night', 'Sun and Sand', 'Always Welcome',];
-        $hotelNames = ['Regency Hotel', 'Cosmopolitan of Las Vegas', 'Hyatt', '5 Star Getaway', 'Wordly Traveller Hotel', 'Sun and Sand Hotel', 'Hotel Jolly'];
+        $hotelNames = ['Regency Hotel', 'Hyatt', 'Hotel Jolly', '5 Star Getaway','Sun and Sand Hotel', 'Wordly Traveller Hotel', 'Cosmopolitan of Las Vegas'];
         $faker = Faker\Factory::create('fr_FR');
         // create 10 users fr
 
@@ -67,19 +70,19 @@ class AppFixtures extends Fixture
         $manager->persist($user);
         $manager->flush($user);
 
-        for ($i = 0; $i < 4; $i++) {
+        for ($i = 0; $i < 6; $i++) {
             $hotel = new Hotel();
             $hotel->setAddress($faker->address);
             $hotel->setCity($faker->city);
             $hotel->setDescription($faker->text);
             $hotel->setPictureUrl($randomHotelimg[$i]);
-            $hotel->setName($hotelNames[rand(0, count($hotelNames) - 1)]);
+            $hotel->setName($hotelNames[$i]);
             $manager->persist($hotel);
             $manager->flush($hotel);
             for ($n = 0; $n < 4; $n++) {
                 $suite = new Suite();
                 $suite->setName($suitenames[rand(0, count($suitenames) - 1)]);
-                $suite->setDescription($faker->text);
+                $suite->setDescription($faker->text . ' ' . $faker->text);
                 $suite->setHotel($hotel);
                 $suite->setHotelId($hotel->getId());
                 $suite->setBookingUrl('https://www.booking.com');

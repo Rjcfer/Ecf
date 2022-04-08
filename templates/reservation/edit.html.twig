@@ -1,13 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modification Reservation{% endblock %}
+{% block title %}Modification Réservation {% endblock %}
 
+{% block javascripts %}
+    <!-- need to load js before page -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    {{ encore_entry_script_tags('deleteOrModifyReservations') }}
+{% endblock %}
 {% block body %}
-    <h1>Edit Reservation</h1>
-
-    {{ include('reservation/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_reservation_index') }}">Retour a la liste</a>
-
+    <h1 class="text-center  h1c">Modification Réservation</h1>
+    <h5 class="h5 text-center"> ID</h5>
+    <h5 class="h5 text-center rId">{{ reservation.id }}</h5>
+    {{ form_start(form) }}
+    <div class="col">
+        <div class="row text-center justify-content-center">
+            <div class="col-sm-4 ">
+                {{ form_row(form.startDate, { 'id':'startDate','attr': {'class': 'endListener'}}) }}
+            </div>
+            <div class="col-sm-4">
+                {{ form_row(form.endDate, {'id':'endDate','attr': {'class': 'endListener'}}) }}
+            </div>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col">
+            <button id="okBtn" class="btn btn-primary canIChange">{{ button_label|default('Mettre à jour') }}</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    <div class="row text-center">
+        <div class="col">
+            <a class="btn btn-primary text-center mt-1" href="{{ path('app_reservation_index') }}">Retour à la liste</a>
+        </div>
+    </div>
     {{ include('reservation/_delete_form.html.twig') }}
+
 {% endblock %}

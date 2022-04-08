@@ -10,9 +10,7 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
+
 </head>
 <header>
     <div class="row">
@@ -82,6 +80,10 @@
 
                     {% endif %}
                     <li class="nav-item ">
+                        <a class="nav-link" href="{{ path('app_reservation_new') }}">Réservez </a>
+                    </li>
+
+                    <li class="nav-item ">
                         <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
                     </li>
                 </ul>
@@ -96,5 +98,7 @@
 {% block body %}
 
 {% endblock %}
-
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
 </html>
