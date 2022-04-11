@@ -9,103 +9,9 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
-
 </head>
 <body>
-<header>
-
-    <div class="row">
-        <div class="col">
-            <nav class="navbar navbar-expand-md  navbar-light bg-light">
-                <a class="navbar-brand" href="#">Hypnos</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarCollapse" aria-controls="navbarCollapse"
-                        aria-expanded="true" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="nav navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link " href="{{ path('app_home_page') }}">
-                                <i class="fa-solid fa-house"></i>
-                            </a>
-                        </li>
-                        {% if is_granted('ROLE_SUPER_ADMIN') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_user_index') }}">User params</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_hotel_form') }}">Add hotel </a>
-                            </li>
-
-                            <li class="nav-item">
-
-                                <a class="nav-link" href="{{ path('app_suite_form_s_p') }}">Add suite </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                            </li>
-
-
-                        {% elseif is_granted('ROLE_ADMIN') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link"
-                                   href="{{ path('app_suite_controlleradmin_index', {'idHotel': app.user.managerOfHotelId }) }}">
-                                    Suites</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                            </li>
-
-                        {% elseif is_granted('ROLE_CLIENT') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                            </li>
-
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
-                            </li>
-                            <li class="nav-item ">
-                                <a class="nav-link" href="{{ path('app_login') }}">Connexion </a>
-                            </li>
-
-                        {% endif %}
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ path('app_reservation_new') }}">Réservez </a>
-                        </li>
-
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">{{ message }}</div>
-            {% endfor %}
-        </div>
-    </div>
-
-</header>
-
-
+{% include 'nav/nav.html.twig' %}
 {% block body %}
 
 {% endblock %}
@@ -113,12 +19,9 @@
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
     {{ encore_entry_script_tags('bootstrap') }}
-    <!-- code to add bootstrap navbar i cant fix without cdn -->
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js"
-            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <!-- cant be able to make  bootstrap navbar working without import cdn -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-
 {% endblock %}
 </html>
