@@ -1,20 +1,20 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User index{% endblock %}
+{% block title %}Liste d'utilisateurs{% endblock %}
 
 {% block body %}
-    <h1>User index</h1>
+    <h1 class="text-center">Liste d'utilisateurs</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Mail</th>
+                <th>Email</th>
                 <th>Roles</th>
-                <th>Password</th>
-                <th>FirstName</th>
-                <th>LastName</th>
-                <th>ManagerOfHotelId</th>
+                <th>Mot de passe</th>
+                <th>Prénom</th>
+                <th>Nom</th>
+                <th>Manager de (id)</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -29,8 +29,8 @@
                 <td>{{ user.lastName }}</td>
                 <td>{{ user.managerOfHotelId }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    <a class="btn btn-sm btn-success" href="{{ path('app_user_show', {'id': user.id}) }}">+</a>
+                    <a class="btn btn-sm btn-primary" href="{{ path('app_user_edit', {'id': user.id}) }}">éditer</a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +41,5 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_user_new') }}">Create new</a>
+    <a class=" m-1 btn btn-primary" href="{{ path('app_user_new') }}">Nouveau</a>
 {% endblock %}
