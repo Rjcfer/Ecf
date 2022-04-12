@@ -6,10 +6,10 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             {% for hotel in hotelList %}
-                <div class="col-md-4 col-12 bg-light border rounded mx-2 my-2 shadow text-center  ">
+                <div class="col-md-4 col-12 bg-light border rounded mx-2  mb-4 shadow text-center  ">
                     <a class="text-decoration-none text-black" href="{{ path('app_hotel_page', {'id': hotel.id}) }}"
                     >
-                        <div class="row justify-content-center">
+                        <div class="row justify-content-center ">
                             <div class="col ">
 
                                 <h3 class="h1c">{{ hotel.name }} </h3>
