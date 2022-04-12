@@ -11,7 +11,7 @@
                 <div class="row justify-content-center">
                     <div class="col">
 
-                        <h3 class="h3">{{ s.Title }} </h3>
+                        <h3 class="h3 h1c">{{ s.Title }} </h3>
                     </div>
                     <div class="row ">
                         <div class="col mx-1 my-1">
@@ -19,6 +19,12 @@
                                 <img alt="Qries" src="{{ s.mainPictureUrl }}"
                                      height="150">
                             </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <a href="{{ path('show_pictures', {'idSuite': s.id}) }}" class="text-sm-center
+                                text-decoration-none "> Voir plus </a>
                         </div>
                     </div>
                     <div class="row">
@@ -32,11 +38,11 @@
                         {% if is_granted('ROLE_USER') %}
                             <a class=" btn  bg-primary bg-opacity-75 rounded-3"
                                href="{{ path('app_reservation_newwithids', {'idHotel': s.hotelid , 'idSuite': s.id ,'idUser':app.user.id}) }}">
-                                Reserver</a>
+                                Réserver</a>
                         {% else %}
                             <a class=" btn  bg-primary bg-opacity-75 rounded-3"
                                href="{{ path('app_reservation_newwithoutuserId', {'idHotel': s.hotelid , 'idSuite': s.id }) }}">
-                                Reserver</a>
+                                Réserver</a>
                         {% endif %}
                     </div>
                     {% if s.occupied == true %}
@@ -44,9 +50,12 @@
                             <p class="btn btn-sm bg-danger bg-opacity-75 rounded-3"> Occupé </p>
                         </div>
                     {% else %}
-                        <div class="col-6">
-                            <p class="btn btn-sm bg-success bg-opacity-75 rounded-3"> Libre </p>
+                        <div class="row justify-content-center mt-1">
+                            <div class="col-sm-4 col-md-5 col-6">
+                                <p class=" bg-success bg-opacity-75 rounded-3"> Dates <br/> disponibles</p>
+                            </div>
                         </div>
+
                     {% endif %}
 
                     <div class="row">

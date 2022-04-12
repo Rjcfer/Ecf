@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nouveau Hotel{% endblock %}
+{% block title %}Nouvel Hôtel{% endblock %}
 
 {% block body %}
+    <h1 class="h1 text-center h1c">Nouvel hôtel</h1>
     <div>
         <div class="row pt-2">
             <div class="col ">
@@ -23,7 +24,7 @@
                     <div class="form-group">
                         {{ form_row(form.Description, { label: 'Description','attr': {'class': 'form-control'}}) }}
                     </div>
-                    <button type="submit" class="btn btn-primary">Register</button>
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
                     {{ form_end(form) }}
                 </div>
             </div>
