@@ -1,5 +1,17 @@
 body {
-  background-color: lightgray;
+  background-color: red;
+  font-family: "Times New Roman", serif;
+
+
+}
+
+.h1c {
+  color: gray;
+  font-family: "Comic Sans MS", "Times New Roman", serif;
+}
+// to fix bootstrap bug when collapses
+.navbar-collapse.in {
+  display: block !important;
 }
 
 .carousel-inner {
@@ -12,5 +24,4 @@ body {
   max-height: 30rem;
   max-width: 70rem;
 }
-
 @import "node_modules/bootstrap/scss/bootstrap.scss";

@@ -9,92 +9,19 @@
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
-
-    {% block javascripts %}
-        {{ encore_entry_script_tags('app') }}
-    {% endblock %}
 </head>
-<header>
-    <div class="row">
-        <div class="col">
-            <nav class="navbar navbar-expand navbar-light bg-light">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('app_home_page') }}">
-                            <i class="fa-solid fa-house"></i>
-                        </a>
-                    </li>
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
-                        </li>
-
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_user_index') }}">User params</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_hotel_form') }}">Add hotel </a>
-                        </li>
-
-                        <li class="nav-item">
-
-                            <a class="nav-link" href="{{ path('app_suite_form_s_p') }}">Add suite </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </li>
-
-
-                    {% elseif is_granted('ROLE_ADMIN') %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link"
-                               href="{{ path('app_suite_controlleradmin_index', {'idHotel': app.user.managerOfHotelId }) }}">
-                                Suites</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </li>
-
-                    {% elseif is_granted('ROLE_CLIENT') %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_reservation_index') }}">Réservations</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_logout') }}">Se déconnecter</a>
-                        </li>
-
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_register') }}">Inscription</a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{{ path('app_login') }}">Connexion </a>
-                        </li>
-
-                    {% endif %}
-                    <li class="nav-item ">
-                        <a class="nav-link" href="{{ path('app_contact') }}">Contactez-nous </a>
-                    </li>
-                </ul>
-            </nav>
-            {% for message in app.flashes('success') %}
-                <div class="alert alert-success">{{ message }}</div>
-            {% endfor %}
-        </div>
-    </div>
-</header>
-
+<body>
+{% include 'nav/nav.html.twig' %}
 {% block body %}
 
 {% endblock %}
-
+</body>
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('bootstrap') }}
+    <!-- cant be able to make  bootstrap navbar working without import cdn -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+{% endblock %}
 </html>

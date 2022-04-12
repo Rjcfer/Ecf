@@ -1,4 +1,17 @@
-<form method="post" action="{{ path('app_reservation_delete', {'id': reservation.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+<form method="post" action="{{ path('app_reservation_delete', {'id': reservation.id}) }}"
+      onsubmit="return confirm('Voulez vous vraiment annuler?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.id) }}">
-    <button class="btn">Delete</button>
+    <div class="row text-center mt-3 ">
+        <div class="col">
+            <button class="btn btn-danger canIChange">Supprimer</button>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-3">
+        <div class="col-6 ">
+            <p class=" bg-danger text-center bg-gradient rounded sorry"> Vous ne pouvez pas supprimer à moins de 3 jours
+                de la date de
+                réservation </p>
+        </div>
+    </div>
+
 </form>

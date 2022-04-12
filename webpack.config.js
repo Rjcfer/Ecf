@@ -25,6 +25,9 @@ Encore
     .addEntry('datepicker', [
         './assets/js/datepicker.js'
     ])
+    .addEntry('deleteOrModifyReservations', [
+        './assets/js/deleteOrModifyReservations.js'
+    ])
     .addEntry('reservationsajax', [
         './assets/js/reservationsajax.js'
     ])

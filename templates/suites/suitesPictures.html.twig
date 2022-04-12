@@ -4,7 +4,7 @@
 {% block body %}
     <div class="row">
         <div class="col">
-            <h2 class="text-center">{{ suite.name }}</h2>
+            <h1 class="text-center h1 h1c">{{ suite.name }}</h1>
         </div>
     </div>
     <div class="row mt-3 ">
@@ -46,21 +46,13 @@
             {% if is_granted('ROLE_USER') %}
                 <a class=" btn  bg-primary bg-opacity-75 rounded-3"
                    href="{{ path('app_reservation_newwithids', {'idHotel': suite.hotelid , 'idSuite': suite.id ,'idUser':app.user.id}) }}">
-                    Reserver</a>
+                    Réserver</a>
             {% else %}
                 <a class=" btn  bg-primary bg-opacity-75 rounded-3"
                    href="{{ path('app_reservation_newwithoutuserId', {'idHotel': suite.hotelid , 'idSuite': suite.id }) }}">
-                    Reserver</a>
+                    Réserver</a>
             {% endif %}
         </div>
     </div>
 
-    {% block javascripts %}
-        <script>
-
-
-        </script>
-        {{ encore_entry_script_tags('app') }}
-        {{ encore_entry_script_tags('bootstrap') }}
-    {% endblock %}
 {% endblock %}
