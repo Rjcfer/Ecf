@@ -60,7 +60,8 @@
 
 {{ form_end(form) }}
 {% block javascripts %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     {{ encore_entry_script_tags('datepicker') }}
     {{ encore_entry_script_tags('reservationsajax') }}
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 {% endblock %}

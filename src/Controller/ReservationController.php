@@ -56,7 +56,7 @@ class ReservationController extends AbstractController
                 $reservation->setUserId($idUser);
                 $reservationRepository->add($reservation);
                 //flash message to tell user that his reservation has been accepted
-                $this->addFlash('success', 'Reservation terminé');
+                $this->addFlash('success', 'Réservation réussie');
                 return $this->redirect($this->generateUrl('app_home_page'));
             }else{
                 return $this->redirect($this->generateUrl('app_login'));
@@ -132,7 +132,7 @@ class ReservationController extends AbstractController
                 $em->persist($reservation);
                 $em->flush();
                 //flash message to tell user that his reservation has been accepted
-                $this->addFlash('success', 'Reservation terminé');
+                $this->addFlash('success', 'Réservation réussie');
                 $em->persist($reservation);
                 $em->flush();
                 return $this->redirect($this->generateUrl('app_home_page'));
@@ -148,7 +148,7 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/newwithoutuserId/{idHotel}/{idSuite}', name: 'app_reservation_newwithoutuserId', methods: ['GET', 'POST'])]
+    #[Route('/newwithids/{idHotel}/{idSuite}', name: 'app_reservation_newwithoutuserId', methods: ['GET', 'POST'])]
     public function newWithoutUserId(int $idHotel, int $idSuite, Request $request, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
@@ -173,7 +173,7 @@ class ReservationController extends AbstractController
                 $em->persist($reservation);
                 $em->flush();
                 //flash message to tell user that his reservation has been accepted
-                $this->addFlash('success', 'Reservation terminé');
+                $this->addFlash('success', 'Réservation réussie');
                 return $this->redirect($this->generateUrl('app_home_page'));
             }
             return $this->redirect($this->generateUrl('app_home_page'));
