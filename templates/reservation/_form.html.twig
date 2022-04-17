@@ -49,15 +49,7 @@
         </div>
     </div>
 {% endif %}
-{% if not is_granted('ROLE_CLIENT') %}
-    <div class="row text-center mt-2">
-        <div class="col">
-            <p>Votre nom: </p>
-            <input type="text" id="reservationName" name="reservationName" required
-                   minlength="4" maxlength="8" size="10">
-        </div>
-    </div>
-{% endif %}
+
 <div class="row text-center mt-3">
     <div class="col">
         <button id="okBtn" class="btn btn-primary">{{ button_label|default('Réserver') }}</button>

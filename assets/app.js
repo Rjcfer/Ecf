@@ -19,6 +19,17 @@ global.$ = global.jQuery = $;
 $(document).ready(function () {
     $('[data-toggle="popover"]').popover();
 });
+//clear flash messages after 4sec
+let alertMessage = document.querySelectorAll('.alert');
+    setTimeout(()=>{
+        if (alertMessage.length > 0) {
+            alertMessage.forEach((am)=>{
+                am.remove()
+            })
+        }
+    }, 4000)
+
+
 
 
 
