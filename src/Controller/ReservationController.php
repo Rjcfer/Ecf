@@ -109,7 +109,7 @@ class ReservationController extends AbstractController
     public function newWithIds(int $idHotel, int $idSuite, int $idUser, Request $request, ReservationRepository $reservationRepository, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
-        $hotelList = [$em->getRepository(Hotel::class)->find($idHotel)];
+        $hotelList = $em->getRepository(Hotel::class)->findAll();
         $suiteList = [$em->getRepository(Suite::class)->find($idSuite)];
         $suite = $em->getRepository(Suite::class)->find($idSuite);
         $reservation = new Reservation();
@@ -154,7 +154,7 @@ class ReservationController extends AbstractController
         $em = $doctrine->getManager();
         $suiteList = [$em->getRepository(Suite::class)->find($idSuite)];
         $suite = $em->getRepository(Suite::class)->find($idSuite);
-        $hotelList = [$em->getRepository(Hotel::class)->find($idHotel)];
+        $hotelList = $em->getRepository(Hotel::class)->findAll();
         $reservation = new Reservation();
         $suite->setOccupied(true);
         $reservation->setSuite($suite);
