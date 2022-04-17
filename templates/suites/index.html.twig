@@ -56,9 +56,12 @@
                                 <p class=" bg-success bg-opacity-75 rounded-3"> Dates <br/> disponibles</p>
                             </div>
                         </div>
-
                     {% endif %}
-
+                    <div class="row mb-1">
+                        <div class="col text-center">
+                            <a class="btn btn-outline-primary btn-sm" href="{{ s.bookingUrl }}">Booking.com</a>
+                        </div>
+                    </div>
                     <div class="row">
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             <div class="col">
