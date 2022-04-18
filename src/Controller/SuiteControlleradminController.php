@@ -17,10 +17,12 @@ class SuiteControlleradminController extends AbstractController
 
 {
     #[Route('/{idHotel}', name: 'app_suite_controlleradmin_index', methods: ['GET'])]
-    public function index(int $idHotel ,SuiteRepository $suiteRepository): Response
+    public function index(int $idHotel ,SuiteRepository $suiteRepository,ManagerRegistry $doctrine): Response
     {
+        $em = $doctrine->getManager();
+        $suiteList = $em->getRepository(Suite::class)->findby(['hotel_id'=>$idHotel]);
         return $this->render('suite_controlleradmin/index.html.twig', [
-            'suites' => $suiteRepository->findAll(),
+            'suites' => $suiteList
         ]);
     }
 

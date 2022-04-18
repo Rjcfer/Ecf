@@ -23,14 +23,6 @@ class SuiteType extends AbstractType
             ->add('Title')
             ->add('bookingUrl')
             ->add('mainPictureUrl');
-
-        /*   ->add('occupied')
-           ->add('occupiedBy')
-           ->add('reservation')
-           ->add('hotel', EntityType::class, [
-               'class' => Hotel::class,
-               'choice_label' => 'id'
-           ]);*/
     }
 
     public function configureOptions(OptionsResolver $resolver): void
