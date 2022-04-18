@@ -36,33 +36,31 @@ class ReservationController extends AbstractController
         $hotelList = $em->getRepository(Hotel::class)->findAll();
         $suiteList = $em->getRepository(Suite::class)->findAll();
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $sId = ($_POST['suiteID']);
-            // confirm if the user send's me a name for the reservation
-            if (isset($_POST['reservationName'])) {
-                $name = ($_POST['reservationName']);
-            } else {
-                $name = null;
-            }
             $suite = $em->getRepository(Suite::class)->find($sId);
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
             $user = $this->getUser();
-//confirm if user is connected and get his id
-            if ($user != null) {
-                $userId = $user->getId();
-            } else {
-                $userId = null;
+        //confirm if user is connected and get his id
+            $user = $this->getUser();
+            if($user == null){
+                return $this->redirect($this->generateUrl('app_login'));
+            }else{
+               $idUser= $user->getId();
             }
-
-            if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
-                $reservation->setReservationName($name);
+        // see if user is connected else redirect him to the login page
+            if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine) ) {
                 $reservation->setSuite($suite);
-                $reservation->setUserId($userId);
+                $reservation->setUserId($idUser);
                 $reservationRepository->add($reservation);
+                //flash message to tell user that his reservation has been accepted
+                $this->addFlash('success', 'Réservation réussie');
                 return $this->redirect($this->generateUrl('app_home_page'));
+            }else{
+                return $this->redirect($this->generateUrl('app_login'));
             }
-            return $this->redirect($this->generateUrl('app_home_page'));
         }
 
         return $this->renderForm('reservation/new.html.twig', [
@@ -76,6 +74,7 @@ class ReservationController extends AbstractController
 // method allows me to show id a suite is available or not
     public function verifyIfIsAvailable($sDate, $eDate, $suite, ManagerRegistry $doctrine)
     {
+
         $em = $doctrine->getManager();
         $reservationsList = $em->getRepository(Reservation::class)->findAll();
         //confirmation if is array and if given dates are availables
@@ -110,7 +109,7 @@ class ReservationController extends AbstractController
     public function newWithIds(int $idHotel, int $idSuite, int $idUser, Request $request, ReservationRepository $reservationRepository, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
-        $hotelList = [$em->getRepository(Hotel::class)->find($idHotel)];
+        $hotelList = $em->getRepository(Hotel::class)->findAll();
         $suiteList = [$em->getRepository(Suite::class)->find($idSuite)];
         $suite = $em->getRepository(Suite::class)->find($idSuite);
         $reservation = new Reservation();
@@ -121,13 +120,19 @@ class ReservationController extends AbstractController
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
+            $user = $this->getUser();
+            if($user == null){
+                return $this->redirect($this->generateUrl('app_login'));
+            }
             if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
                 $em->persist($reservation);
                 $em->flush();
-                $this->addFlash('success', 'Reservation terminé');
+                //flash message to tell user that his reservation has been accepted
+                $this->addFlash('success', 'Réservation réussie');
                 $em->persist($reservation);
                 $em->flush();
                 return $this->redirect($this->generateUrl('app_home_page'));
@@ -143,13 +148,13 @@ class ReservationController extends AbstractController
         ]);
     }
 
-    #[Route('/newwithoutuserId/{idHotel}/{idSuite}', name: 'app_reservation_newwithoutuserId', methods: ['GET', 'POST'])]
+    #[Route('/newwithids/{idHotel}/{idSuite}', name: 'app_reservation_newwithoutuserId', methods: ['GET', 'POST'])]
     public function newWithoutUserId(int $idHotel, int $idSuite, Request $request, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
         $suiteList = [$em->getRepository(Suite::class)->find($idSuite)];
         $suite = $em->getRepository(Suite::class)->find($idSuite);
-        $hotelList = [$em->getRepository(Hotel::class)->find($idHotel)];
+        $hotelList = $em->getRepository(Hotel::class)->findAll();
         $reservation = new Reservation();
         $suite->setOccupied(true);
         $reservation->setSuite($suite);
@@ -158,12 +163,17 @@ class ReservationController extends AbstractController
 
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $user = $this->getUser();
+            if($user == null){
+                return $this->redirect($this->generateUrl('app_login'));
+            }
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
             if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
                 $em->persist($reservation);
                 $em->flush();
-                $this->addFlash('success', 'Reservation terminé');
+                //flash message to tell user that his reservation has been accepted
+                $this->addFlash('success', 'Réservation réussie');
                 return $this->redirect($this->generateUrl('app_home_page'));
             }
             return $this->redirect($this->generateUrl('app_home_page'));
@@ -254,7 +264,6 @@ class ReservationController extends AbstractController
         //get reservations by suite id to send like a json and use ajax in front
         $em = $doctrine->getManager();
         $suite = $em->getRepository(Suite::class)->find($suiteId);
-        $reservationsList = $em->getRepository(Reservation::class)->findAll();
         $isAvailable = $this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine);
 
         return $this->json(['code' => 200, 'isAvailable' => $isAvailable], 200);
@@ -275,4 +284,5 @@ class ReservationController extends AbstractController
 
         return $this->json(['code' => 200, 'canDelete' => $canDel, 'dateOfTheDay' => $dateOfTheDay, '$limitDate' => $limitDate], 200);
     }
+
 }

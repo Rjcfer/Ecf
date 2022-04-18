@@ -31,9 +31,8 @@ class ContactController extends AbstractController
                     $contactFormData['msg'],
                     'text/plain');
             $mailer->send($message);
-
+       //flash message to tell user that his message  has been send
             $this->addFlash('success', 'Votre message a été envoyé');
-            //sleep(5); // small pause to say that email is send
             return $this->redirectToRoute('app_home_page', [], Response::HTTP_SEE_OTHER);
         }
 

@@ -12,29 +12,52 @@ let eDate;
 okBtn.disabled = true;
 iBtn.style.display = 'none';
 suites.style.display = 'none';
-hotel.addEventListener('change', function (event) {
-    event.preventDefault();
-    let hid = hotel.value;
+
+let localUrl = window.location.href;
+let prefillFields = localUrl.includes("/neww");
+
+if (!prefillFields) {
+    axiosSuitesRequest();
+} else {
+   //get ids by url
+    let hid = localUrl.substr(localUrl.indexOf('/new') + 12, 3)
+    let suiteId = localUrl.substr(localUrl.length - 3, 3);
+    let indexOfId = hid.indexOf('/');
+    if (indexOfId !== (-1)) {
+        hid = hid.replace('/', '')
+    }
+    let indexOfSId = suiteId.indexOf('/');
+    if (indexOfId !== (-1)) {
+        suiteId = suiteId.replace('/', '');
+    }
     let url = "/reservation/getsuite/" + hid;
     axios.get(url).then(function (response) {
         const suiteList = response.data.suites;
         suites.style.display = 'inline-block';
         suites.innerHTML = '';
         let sOpt = document.createElement('option');
-        sOpt.innerHTML = 'Suite';
+        sOpt.innerHTML = 'Suite'
         suites.appendChild(sOpt);
         suiteList.forEach(e => {
-
             let opt = document.createElement('option');
             opt.className = e.price;
             opt.value = e.id;
             opt.id = e.id;
             opt.innerHTML = e.name;
+            if(e.id == suiteId){
+                opt.defaultSelected = true;
+            }
             suites.appendChild(opt);
         })
-
     })
-});
+    for(let i = 0 ; i<hotel.options.length; i++ ){
+        if(hotel[i].value == hid){
+            hotel[i].defaultSelected=true;
+        }
+    }
+    axiosSuitesRequest();
+}
+
 endListener.forEach(item => {
     item.addEventListener('change', function (event) {
         sDate = new Date(startDate.value);
@@ -77,3 +100,33 @@ endListener.forEach(item => {
 
 
 })
+
+function axiosSuitesRequest() {
+    hotel.addEventListener('change', function (event) {
+        event.preventDefault();
+        if (typeof hid == 'undefined') {
+            let hid = 0;
+        }
+        hid = hotel.value;
+        let url = "/reservation/getsuite/" + hid;
+        axios.get(url).then(function (response) {
+            const suiteList = response.data.suites;
+            suites.style.display = 'inline-block';
+            suites.innerHTML = '';
+            let sOpt = document.createElement('option');
+            sOpt.innerHTML = 'Suite';
+            suites.appendChild(sOpt);
+            suiteList.forEach(e => {
+
+                let opt = document.createElement('option');
+                opt.className = e.price;
+                opt.value = e.id;
+                opt.id = e.id;
+                opt.innerHTML = e.name;
+                suites.appendChild(opt);
+            })
+
+        })
+    });
+
+}
