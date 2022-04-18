@@ -1,4 +1,4 @@
-##Hypnos
+#Hypnos
 Ce projet a éte realisé dans le cadre de mon ECF (Evaluation en Cours de Formation) chez Studi
 
 ## Technologies
@@ -55,8 +55,8 @@ heroku login
 heroku create
 ```
 Ensuite, vous devez suivre le tutoriel de ClearDB MySQL pour installer votre base de données en ligne </br>
-le lien officiel: </br>
-https://devcenter.heroku.com/articles/cleardb
+le [lien](https://devcenter.heroku.com/articles/cleardb) officiel
+
 
 Puis:
 ```bash
