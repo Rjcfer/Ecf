@@ -15,7 +15,10 @@ Pour cloner le projet :
 ```bash
   git clone https://github.com/Rjcfer/Ecf.git
 ```
-
+Aller dans le dossier du projet</br>
+```bash
+  cd ecf
+```
 Vérifier les dépendances :
 
 ```bash
