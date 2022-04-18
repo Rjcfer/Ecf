@@ -38,18 +38,23 @@ if (!prefillFields) {
         let sOpt = document.createElement('option');
         sOpt.innerHTML = 'Suite'
         suites.appendChild(sOpt);
+
         suiteList.forEach(e => {
             let opt = document.createElement('option');
             opt.className = e.price;
             opt.value = e.id;
             opt.id = e.id;
             opt.innerHTML = e.name;
+//select suite by id
             if(e.id == suiteId){
                 opt.defaultSelected = true;
+
             }
+
             suites.appendChild(opt);
         })
     })
+    //select hotel by id
     for(let i = 0 ; i<hotel.options.length; i++ ){
         if(hotel[i].value == hid){
             hotel[i].defaultSelected=true;

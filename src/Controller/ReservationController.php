@@ -105,7 +105,7 @@ class ReservationController extends AbstractController
 
     }
 
-    #[Route('/newwithids/{idHotel}/{idSuite}/{idUser}', name: 'app_reservation_newwithids', methods: ['GET', 'POST'])]
+    #[Route('/newwithids/{idHotel}/{idUser}/{idSuite}', name: 'app_reservation_newwithids', methods: ['GET', 'POST'])]
     public function newWithIds(int $idHotel, int $idSuite, int $idUser, Request $request, ReservationRepository $reservationRepository, ManagerRegistry $doctrine): Response
     {
         $em = $doctrine->getManager();
