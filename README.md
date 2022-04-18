@@ -28,6 +28,7 @@ Ne pas oublier de configurer le #Database_url </br>
 Lancer xampp ,apache et MySQL </br>
 Créer la base de données et les tables avec doctrine:
 ```bash
+php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 ```
 
