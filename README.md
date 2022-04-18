@@ -28,12 +28,20 @@ Ne pas oublier de configurer le #Database_url </br>
 
 ## Déploiement en local
 Lancer xampp ,apache et MySQL </br>
+Cree la base de donnes et les tables avec doctrine:
+```bash
+php bin/console doctrine:migrations:migrate
+```
+
 Lancer les fixtures:
 ```bash
 symfony console doctrine:fixtures:load
 ```
-Lancer le serveur local :
+Avec les fixtures de la fausse data sera generer aussi qu'un utilisateur avec un role de "superadmin" sera creer </br>
+email de connexion superadmin@superadmin </br>
+mot de passe superadmin </br>
 
+Lancer le serveur local :
 ```bash
   symfony server:start
 ```
