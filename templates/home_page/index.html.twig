@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="row justify-content-center">
             {% for hotel in hotelList %}
-                <div class="col-md-4 col-12 bg-light border rounded mx-2  mb-4 shadow text-center  ">
+                <div class="col-lg-4 col-12 bg-light border rounded mx-2  mb-4 shadow text-center  ">
                     <a class="text-decoration-none text-black" href="{{ path('app_hotel_page', {'id': hotel.id}) }}"
                     >
                         <div class="row justify-content-center ">
@@ -16,7 +16,7 @@
                             </div>
                             <div class="row ">
                                 <div class="col m-1">
-                                    <img class="rounded-3 " alt="Qries" src="{{ hotel.getPictureUrl }}" height="150">
+                                    <img class="rounded-3 " alt="Qries" src="{{ hotel.getPictureUrl }}" height="150" >
                                 </div>
                             </div>
                         </div>

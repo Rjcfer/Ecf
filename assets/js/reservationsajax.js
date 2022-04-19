@@ -30,6 +30,8 @@ if (!prefillFields) {
     if (indexOfId !== (-1)) {
         suiteId = suiteId.replace('/', '');
     }
+    hid= parseInt(hid);
+    suiteId=parseInt(suiteId);
     let url = "/reservation/getsuite/" + hid;
     axios.get(url).then(function (response) {
         const suiteList = response.data.suites;
@@ -38,20 +40,25 @@ if (!prefillFields) {
         let sOpt = document.createElement('option');
         sOpt.innerHTML = 'Suite'
         suites.appendChild(sOpt);
+
         suiteList.forEach(e => {
             let opt = document.createElement('option');
             opt.className = e.price;
             opt.value = e.id;
             opt.id = e.id;
             opt.innerHTML = e.name;
-            if(e.id == suiteId){
+//select suite by id
+            console.log(suiteId);
+            if(e.id === suiteId){
                 opt.defaultSelected = true;
             }
+
             suites.appendChild(opt);
         })
     })
+    //select hotel by id
     for(let i = 0 ; i<hotel.options.length; i++ ){
-        if(hotel[i].value == hid){
+        if(hotel[i].value === hid){
             hotel[i].defaultSelected=true;
         }
     }
@@ -76,7 +83,7 @@ endListener.forEach(item => {
             }).then(function (response) {
                 let data = response.data;
                 let isAvailable = data.isAvailable;
-                if (!isAvailable) {
+                if (isAvailable) {
                     okBtn.disabled = true;
                     okBtn.style.display = 'none';
                     iBtn.disabled = true;
