@@ -83,26 +83,24 @@ class ReservationController extends AbstractController
                 if ($r->getSuite() == $suite) {
                     $start = $r->getStartDate()->getTimestamp();
                     $end = $r->getEndDate()->getTimestamp();
-
-                    if ($start >= $sDate && $start <= $eDate) {
+                    if($start <= $sDate && $sDate <= $end){
+                      return false;
+                    }
+                    if($start <= $eDate && $eDate <= $end){
                         return false;
                     }
-                    if ($start <= $sDate && $sDate <= $end) {
+                    if($sDate <= $start && $start<= $eDate){
                         return false;
                     }
-                    if ($eDate >= $end && $sDate <= $start) {
-                        return false;
-                    }
-                    if ($end >= $sDate && $end <= $eDate) {
+                    if($sDate <= $end && $end<= $eDate){
                         return false;
                     }
                 }
             }
-            return true;
-        } else {
+        }else{
             return false;
         }
-
+return true;
     }
 
     #[Route('/newwithids/{idHotel}/{idUser}/{idSuite}', name: 'app_reservation_newwithids', methods: ['GET', 'POST'])]
@@ -125,6 +123,7 @@ class ReservationController extends AbstractController
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
             $user = $this->getUser();
+
             if($user == null){
                 return $this->redirect($this->generateUrl('app_login'));
             }
