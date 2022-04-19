@@ -30,7 +30,7 @@ if (!prefillFields) {
     if (indexOfId !== (-1)) {
         suiteId = suiteId.replace('/', '');
     }
-    hid= parseInt(hid);
+
     suiteId=parseInt(suiteId);
     let url = "/reservation/getsuite/" + hid;
     axios.get(url).then(function (response) {
@@ -56,6 +56,7 @@ if (!prefillFields) {
         })
     })
     //select hotel by id
+
     for(let i = 0 ; i<hotel.options.length; i++ ){
         if(hotel[i].value === hid){
             hotel[i].defaultSelected=true;
