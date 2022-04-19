@@ -8,6 +8,7 @@ use App\Entity\Suite;
 use App\Form\ReservationType;
 use App\Repository\ReservationRepository;
 use ContainerLUt1Pge\getDoctrine_Orm_DefaultEntityManagerService;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -43,22 +44,22 @@ class ReservationController extends AbstractController
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
             $user = $this->getUser();
-        //confirm if user is connected and get his id
+            //confirm if user is connected and get his id
             $user = $this->getUser();
-            if($user == null){
+            if ($user == null) {
                 return $this->redirect($this->generateUrl('app_login'));
-            }else{
-               $idUser= $user->getId();
+            } else {
+                $idUser = $user->getId();
             }
-        // see if user is connected else redirect him to the login page
-            if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine) ) {
+            // see if user is connected else redirect him to the login page
+            if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
                 $reservation->setSuite($suite);
                 $reservation->setUserId($idUser);
                 $reservationRepository->add($reservation);
                 //flash message to tell user that his reservation has been accepted
                 $this->addFlash('success', 'Réservation réussie');
                 return $this->redirect($this->generateUrl('app_home_page'));
-            }else{
+            } else {
                 return $this->redirect($this->generateUrl('app_login'));
             }
         }
@@ -78,30 +79,37 @@ class ReservationController extends AbstractController
         $em = $doctrine->getManager();
         $reservationsList = $em->getRepository(Reservation::class)->findAll();
         //confirmation if is array and if given dates are availables
+
         if (is_array($reservationsList)) {
+            $isOK = true;
             foreach ($reservationsList as $r) {
                 if ($r->getSuite() == $suite) {
                     $start = $r->getStartDate()->getTimestamp();
                     $end = $r->getEndDate()->getTimestamp();
-                    if($start <= $sDate && $sDate <= $end){
-                      return false;
+
+                    if ($start <= $sDate && $sDate <= $end) {
+                        $isOK = false;
                     }
-                    if($start <= $eDate && $eDate <= $end){
-                        return false;
+                    if ($start <= $eDate && $eDate <= $end) {
+                        $isOK = false;
                     }
-                    if($sDate <= $start && $start<= $eDate){
-                        return false;
+                    if ($eDate <= $start && $start <= $eDate) {
+                        $isOK = false;
                     }
-                    if($sDate <= $end && $end<= $eDate){
-                        return false;
+                    if ($sDate <= $end && $end <= $sDate) {
+                        $isOK = false;
+                    }
+                    if($sDate <= $start && $eDate >= $start){
+                        $isOK=false;
                     }
                 }
             }
-        }else{
-            return false;
+            return $isOK;
         }
-return true;
+        return false;
+
     }
+
 
     #[Route('/newwithids/{idHotel}/{idUser}/{idSuite}', name: 'app_reservation_newwithids', methods: ['GET', 'POST'])]
     public function newWithIds(int $idHotel, int $idSuite, int $idUser, Request $request, ReservationRepository $reservationRepository, ManagerRegistry $doctrine): Response
@@ -124,7 +132,7 @@ return true;
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
             $user = $this->getUser();
 
-            if($user == null){
+            if ($user == null) {
                 return $this->redirect($this->generateUrl('app_login'));
             }
             if ($this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine)) {
@@ -163,7 +171,7 @@ return true;
 
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->getUser();
-            if($user == null){
+            if ($user == null) {
                 return $this->redirect($this->generateUrl('app_login'));
             }
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
@@ -263,7 +271,10 @@ return true;
         //get reservations by suite id to send like a json and use ajax in front
         $em = $doctrine->getManager();
         $suite = $em->getRepository(Suite::class)->find($suiteId);
+        //confirmation if is array and if given dates are availables
         $isAvailable = $this->verifyIfIsAvailable($sDate, $eDate, $suite, $doctrine);
+        $reservationsList = $em->getRepository(Reservation::class)->findAll();
+
 
         return $this->json(['code' => 200, 'isAvailable' => $isAvailable], 200);
     }

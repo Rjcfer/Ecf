@@ -82,8 +82,7 @@ endListener.forEach(item => {
                 'suiteId': sId
             }).then(function (response) {
                 let data = response.data;
-                let isAvailable = data.isAvailable;
-                if (isAvailable) {
+                if (!data.isAvailable) {
                     okBtn.disabled = true;
                     okBtn.style.display = 'none';
                     iBtn.disabled = true;
