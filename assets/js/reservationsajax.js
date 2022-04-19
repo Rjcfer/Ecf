@@ -48,7 +48,6 @@ if (!prefillFields) {
             opt.id = e.id;
             opt.innerHTML = e.name;
 //select suite by id
-            console.log(suiteId);
             if(e.id === suiteId){
                 opt.defaultSelected = true;
             }
