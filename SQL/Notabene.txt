@@ -1,0 +1,1 @@
+Les fixtures se trouvent dans le dossier src/DataFixtures.
