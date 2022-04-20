@@ -10,29 +10,30 @@
                 {% if form is defined %}
                 <div class="form-group">
                     {{ form_start(form) }}
-                    {{ form_row(form.name, label: 'Nom', 'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.name,{ label: 'Nom', 'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.Title, label: 'Titre', 'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.Title,{ label: 'Titre', 'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.description, label: 'Description', 'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.description, {label: 'Description', 'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.price, label: 'Prix', 'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.price, {label: 'Prix', 'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.bookingUrl, label: 'Lien Booking', 'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.bookingUrl,{ label: 'Lien Booking', 'attr': {'class': 'form-control'}}) }}
                 </div>
                 <div class="form-group">
-                    {{ form_row(form.mainPictureUrl, label: 'Lien Photo', 'attr': {'class': 'form-control'}}) }}
+                    {{ form_row(form.mainPictureUrl,{ label: 'Lien Photo', 'attr': {'class': 'form-control'}}) }}
                 </div>
-                <input type="text" id="picturesUrl" name="picturesUrl" required>
-                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    <label class="form-label required"> Photos en plus</label>
+                <input class="form-control"  type="text" id="picturesUrl" name="picturesUrl" required>
+                <button type="submit" class="btn btn-primary mt-2">Enregistrer</button>
                 {{ form_end(form) }}
                 {% endif %}
             </div>
-            <a href="{{ path('app_suite_controlleradmin_index',{'idHotel': app.user.managerOfHotelId}) }}">Retour</a>
+            <a  class="btn btn-secondary btn-sm" href="{{ path('app_suite_controlleradmin_index',{'idHotel': app.user.managerOfHotelId}) }}">Retour</a>
         </div>
     </div>
 </div>
