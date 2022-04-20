@@ -74,13 +74,6 @@ ALTER TABLE suite
 ALTER TABLE user
     MODIFY id int (11) NOT NULL AUTO_INCREMENT;
 
-
-ALTER TABLE reservation
-    ADD CONSTRAINT FK_42C849554FFCB518 FOREIGN KEY (suite_id) REFERENCES suite (id);
-
-ALTER TABLE suite
-    ADD CONSTRAINT FK_153CE4263243BB18 FOREIGN KEY (hotel_id) REFERENCES hotel (id);
-
 INSERT INTO `user` (`id`, `mail`, `roles`, `password`, `first_name`, `last_name`, `manager_of_hotel_id`)
 VALUES (193, 'superadmin@superadmin', '[\"ROLE_SUPER_ADMIN\"]',
         '$2y$13$J9p4I59muJqO2hERhVQRY.zHXfQfH.BeTzQZ4cebGjwXBLmdt5LCW', 'Henriette', 'Weiss', NULL),
