@@ -26,7 +26,7 @@ class User1Type extends AbstractType
                 'label' => 'Email',
             ])
             ->add('managerOfHotelId', NumberType::class, [
-                'label' => 'Manger hotel(id)',
+                'label' => 'Manager hotel(id)',
             ]);
     }
 

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/suite/controlleradmin')]
+#[Route('/admin/suite')]
 class SuiteControlleradminController extends AbstractController
 
 {
@@ -25,7 +25,7 @@ class SuiteControlleradminController extends AbstractController
             'suites' => $suiteList
         ]);
     }
-
+//ask the creation of a new suite with the hotelid on the param of the route
     #[Route('/new/{idHotel}', name: 'app_suite_controlleradmin_new', methods: ['GET', 'POST'])]
     public function new(ManagerRegistry $doctrine ,int $idHotel ,Request $request, SuiteRepository $suiteRepository): Response
     {
@@ -64,7 +64,7 @@ class SuiteControlleradminController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_suite_controlleradmin_edit', methods: ['GET', 'POST'])]
+    #[Route('/edit/{id}', name: 'app_suite_controlleradmin_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Suite $suite, SuiteRepository $suiteRepository): Response
     {
         $form = $this->createForm(SuiteType::class, $suite);

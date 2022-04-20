@@ -67,7 +67,6 @@ class HotelFormController extends AbstractController
                 'Le hotel avec l\'id: ' . $id . ' n\'existe plus  '
             );
         }
-       // $url = ($_POST['picturesUrl']);
         $em->persist($hotel);
         $em->flush();
 
