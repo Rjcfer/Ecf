@@ -61,14 +61,32 @@ class AppFixtures extends Fixture
             $manager->flush($user);
         }
         //add superadmin
-        $user = new User();
-        $user->setFirstName($faker->firstName);
-        $user->setLastName($faker->lastName);
-        $user->setRoles(["ROLE_SUPER_ADMIN"]);
-        $user->setMail('superadmin@superadmin');
-        $user->setPassword($this->userPasswordHasher->hashPassword($user, 'superadmin'));
-        $manager->persist($user);
-        $manager->flush($user);
+        $userSP = new User();
+        $userSP->setFirstName($faker->firstName);
+        $userSP->setLastName($faker->lastName);
+        $userSP->setRoles(["ROLE_SUPER_ADMIN"]);
+        $userSP->setMail('superadmin@superadmin');
+        $userSP->setPassword($this->userPasswordHasher->hashPassword($user, 'superadmin'));
+        $manager->persist($userSP);
+        $manager->flush($userSP);
+        //creation of admin without hotel
+        $userAdmin = new User();
+        $userAdmin->setFirstName($faker->firstName);
+        $userAdmin->setLastName($faker->lastName);
+        $userAdmin->setRoles(["ROLE_ADMIN"]);
+        $userAdmin->setMail('gerant@gerant');
+        $userAdmin->setPassword($this->userPasswordHasher->hashPassword($user, 'gerant'));
+        $manager->persist($userAdmin);
+        $manager->flush($userAdmin);
+        //creation of admin without hotel
+        $client = new User();
+        $client->setFirstName($faker->firstName);
+        $client->setLastName($faker->lastName);
+        $client->setRoles(["ROLE_CLIENT"]);
+        $client->setMail('client@client');
+        $client->setPassword($this->userPasswordHasher->hashPassword($user, 'gerant'));
+        $manager->persist($client);
+        $manager->flush($client);
 
         for ($i = 0; $i < 6; $i++) {
             $hotel = new Hotel();

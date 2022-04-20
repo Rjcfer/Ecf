@@ -4,44 +4,53 @@
 
 {% block body %}
     <h1 class="text-center h1  h1c">Liste des suites de votre hôtel</h1>
+    <div class="row">
+        <div class="col">
+            <table class="table">
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Occupé</th>
-                <th>occupé par</th>
-                <th>Prix</th>
-                <th>Titre</th>
-                <th>Booking</th>
-                <th>Description</th>
-                <th>Hotel_id</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for suite in suites %}
-            <tr>
-                <td>{{ suite.id }}</td>
-                <td>{{ suite.name }}</td>
-                <td>{{ suite.occupied ? 'Oui' : 'Non' }}</td>
-                <td>{{ suite.occupiedBy }}</td>
-                <td>{{ suite.price }}</td>
-                <td>{{ suite.Title }}</td>
-                <td>{{ suite.bookingUrl }}</td>
-                <td>{{ suite.description }}</td>
-                <td>{{ suite.hotelId }}</td>
-                <td>
-                    <a class="btn btn-primary btn-sm" href="{{ path('app_suite_controlleradmin_edit', {'id': suite.id}) }}">Modifier</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="12">Rien n'a été trouvé</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a class="btn btn-outline-primary btn-sm" href="{{ path('app_suite_controlleradmin_new', {'idHotel': app.user.managerOfHotelId }) }}">Ajouter une suite</a>
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Occupé</th>
+                    <th scope="col">occupé par</th>
+                    <th scope="col">Prix</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Booking</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Hotel_id</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for suite in suites %}
+                    <tr>
+                        <td>{{ suite.id }}</td>
+                        <td>{{ suite.name }}</td>
+                        <td>{{ suite.occupied ? 'Oui' : 'Non' }}</td>
+                        <td>{{ suite.occupiedBy }}</td>
+                        <td>{{ suite.price }}</td>
+                        <td>{{ suite.Title }}</td>
+                        <td>{{ suite.bookingUrl }}</td>
+                        <td>{{ suite.description }}</td>
+                        <td>{{ suite.hotelId }}</td>
+                        <td>
+                            <a class="btn btn-primary btn-sm"
+                               href="{{ path('app_suite_controlleradmin_edit', {'id': suite.id}) }}">Modifier</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="12">Rien n'a été trouvé</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <a class="btn btn-outline-primary btn-sm"
+               href="{{ path('app_suite_controlleradmin_new', {'idHotel': app.user.managerOfHotelId }) }}">Ajouter une
+                suite</a>
+        </div>
+    </div>
 {% endblock %}

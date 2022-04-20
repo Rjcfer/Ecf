@@ -1,5 +1,5 @@
 
 <form method="post" action="{{ path('app_suite_controlleradmin_delete', {'id': suite.id}) }}" onsubmit="return confirm('Etes-vous sûr bien vouloir supprimer ?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ suite.id) }}">
-    <button class="btn btn-danger btn-sm ">Supprimer</button>
+    <button class="btn btn-danger btn-sm m-1 ">Supprimer</button>
 </form>

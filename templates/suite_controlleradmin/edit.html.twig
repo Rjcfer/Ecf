@@ -7,7 +7,7 @@
 
     {{ include('suite_controlleradmin/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a class="btn btn-sm btn-secondary" href="{{ path('app_suite_controlleradmin_index',{'idHotel': app.user.managerOfHotelId}) }}">Retour</a>
+    <a class="btn btn-sm btn-secondary m-1" href="{{ path('app_suite_controlleradmin_index',{'idHotel': app.user.managerOfHotelId}) }}">Retour</a>
 
     {{ include('suite_controlleradmin/_delete_form.html.twig') }}
 {% endblock %}
