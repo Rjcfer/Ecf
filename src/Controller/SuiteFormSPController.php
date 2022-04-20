@@ -75,7 +75,6 @@ class SuiteFormSPController extends AbstractController
                 'Le suite avec l\'id: ' . $id . ' n\'existe plus  '
             );
         }
-        // $url = ($_POST['picturesUrl']);
         $em->persist($suite);
         $em->flush();
 

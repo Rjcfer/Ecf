@@ -43,7 +43,6 @@ class ReservationController extends AbstractController
             $suite = $em->getRepository(Suite::class)->find($sId);
             $sDate = ($form->get('startDate')->getData())->getTimestamp();
             $eDate = ($form->get('endDate')->getData())->getTimestamp();
-            $user = $this->getUser();
             //confirm if user is connected and get his id
             $user = $this->getUser();
             if ($user == null) {
@@ -99,8 +98,8 @@ class ReservationController extends AbstractController
                     if ($sDate <= $end && $end <= $sDate) {
                         $isOK = false;
                     }
-                    if($sDate <= $start && $eDate >= $start){
-                        $isOK=false;
+                    if ($sDate <= $start && $eDate >= $start) {
+                        $isOK = false;
                     }
                 }
             }
@@ -110,7 +109,7 @@ class ReservationController extends AbstractController
 
     }
 
-
+// route with 3 ids hotel and suite
     #[Route('/newwithids/{idHotel}/{idUser}/{idSuite}', name: 'app_reservation_newwithids', methods: ['GET', 'POST'])]
     public function newWithIds(int $idHotel, int $idSuite, int $idUser, Request $request, ReservationRepository $reservationRepository, ManagerRegistry $doctrine): Response
     {
@@ -154,7 +153,7 @@ class ReservationController extends AbstractController
             'form' => $form,
         ]);
     }
-
+// route with 2 ids hotel and suite
     #[Route('/newwithids/{idHotel}/{idSuite}', name: 'app_reservation_newwithoutuserId', methods: ['GET', 'POST'])]
     public function newWithoutUserId(int $idHotel, int $idSuite, Request $request, ManagerRegistry $doctrine): Response
     {
@@ -194,7 +193,6 @@ class ReservationController extends AbstractController
         ]);
     }
 
-//use to ajax requests
 
     #[Route('/{id}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
@@ -233,13 +231,12 @@ class ReservationController extends AbstractController
     {
         $canDel = false;
         $sDate = $reservation->getStartDate()->getTimestamp();
+        // (never trust user inputs) so i try the dates again before saving en DB
         $dateOfTheDay = strtotime('now');
         $limitDate = strtotime('-3 days', $sDate);
         if ($dateOfTheDay < $limitDate) {
             $canDel = true;
         }
-
-        // never trust user inputs so i try the dates again
         if ($this->isCsrfTokenValid('delete' . $reservation->getId(), $request->request->get('_token')) && $canDel) {
             $reservationRepository->remove($reservation);
         }
@@ -247,6 +244,7 @@ class ReservationController extends AbstractController
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 
+// use to ajax request
     #[Route('/getsuite/{hotelId}', name: 'app_reservation_getsuiteList', methods: ['POST', 'GET'])]
     public function findOcuupiedOrNot(int $hotelId, ManagerRegistry $doctrine): Response
     {
@@ -260,6 +258,7 @@ class ReservationController extends AbstractController
         return $this->json(['code' => 200, 'suites' => $arrayToSend], 200);
     }
 
+// use to ajax request
     #[Route('/getdispo/{suiteId}', name: 'app_reservation_getReservationsList', methods: ['POST', 'GET'])]
     public function reservationsDates(int $suiteId, ManagerRegistry $doctrine, Request $request): Response
     {
@@ -278,7 +277,8 @@ class ReservationController extends AbstractController
 
         return $this->json(['code' => 200, 'isAvailable' => $isAvailable], 200);
     }
-
+    // use to ajax request
+//this route sends a json to see if a user can delete his reservation or not (less than 3 days)
     #[Route('/candelete/{reservationId}', name: 'app_reservation_canDelete', methods: ['POST', 'GET'])]
     public function canDelete(int $reservationId, ManagerRegistry $doctrine): Response
     {
